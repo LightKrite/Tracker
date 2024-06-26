@@ -72,6 +72,8 @@ final class TrackerScheduleViewController: UIViewController {
         titleConfig()
         acceptScheduleButtonConfig()
         tableViewConfig()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -79,6 +81,10 @@ final class TrackerScheduleViewController: UIViewController {
     }
     
     // MARK: - Objective-C functions
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
     
     @objc
     func didTapAcceptScheduleButton() {

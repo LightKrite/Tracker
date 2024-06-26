@@ -21,6 +21,7 @@ final class TrackersViewController: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
+    private var currentDate = Date()
     private let cellIdentifier = "Cell"
     private let headerIdentifier = "Header"
     
@@ -50,8 +51,9 @@ final class TrackersViewController: UIViewController {
     private let datePicker: UIDatePicker = {
         var datePicker = UIDatePicker()
         datePicker.timeZone = NSTimeZone.local
-        datePicker.datePickerMode = UIDatePicker.Mode.date
+        datePicker.datePickerMode = .date
         datePicker.preferredDatePickerStyle = .compact
+        datePicker.calendar.locale = Locale(identifier: "ru_RU")
         datePicker.translatesAutoresizingMaskIntoConstraints = false
         return datePicker
     }()
@@ -70,7 +72,7 @@ final class TrackersViewController: UIViewController {
     private lazy var searchBar: UISearchBar = {
         var searchBar = UISearchBar()
         searchBar.searchBarStyle = UISearchBar.Style.default
-        searchBar.placeholder = "Search..."
+        searchBar.placeholder = "Search"
         searchBar.sizeToFit()
         searchBar.isTranslucent = true
         searchBar.backgroundImage = UIImage()
@@ -98,6 +100,9 @@ final class TrackersViewController: UIViewController {
         addTopBar()
         collectionViewConfig()
         reloadVisibleCategories()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+
     }
     
     private func reloadVisibleCategories() {
@@ -129,6 +134,8 @@ final class TrackersViewController: UIViewController {
         showOrHideEmptyTrackersInfo()
     }
     
+    
+    
     private func showOrHideEmptyTrackersInfo() {
         if visibleCategories[0].trackers.count == 0 {
             showEmptyTrackersInfo()
@@ -150,6 +157,11 @@ final class TrackersViewController: UIViewController {
     }
     
     // MARK: - Objective-C functions
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
     @objc
     func didTapPlusButton() {
         let vc = TrackerTypeViewController()
@@ -171,6 +183,7 @@ extension TrackersViewController {
     // MARK: - Date Picker
     @objc
     func datePickerValueChanged(_ sender: UIDatePicker) {
+        currentDate = datePicker.date
         searchBar.text = ""
         searchBar.endEditing(true)
         reloadVisibleCategories()
@@ -352,6 +365,7 @@ private extension TrackersViewController {
         // DatePicker
         navBar.addSubview(datePicker)
         NSLayoutConstraint.activate([
+            datePicker.widthAnchor.constraint(equalToConstant: 120),
             datePicker.centerYAnchor.constraint(equalTo: navBar.centerYAnchor, constant: -datePicker.frame.size.height/2),
             datePicker.trailingAnchor.constraint(equalTo: navBar.trailingAnchor, constant: -16)
         ])

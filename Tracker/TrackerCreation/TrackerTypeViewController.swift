@@ -66,10 +66,15 @@ final class TrackerTypeViewController: UIViewController {
         view.backgroundColor = UIColor(named: "YP White")
         titleConfig()
         stackViewConfig()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
     
     // MARK: - Objective-C functions
     
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
     
     @objc
     func didTapRegularTrackerButton() {

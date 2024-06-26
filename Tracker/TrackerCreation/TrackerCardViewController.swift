@@ -52,6 +52,7 @@ final class TrackerCardViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = UIColor(named: "YP LightGrey")?.withAlphaComponent(0.3)
         textField.clearButtonMode = .whileEditing
+        textField.placeholder = "Enter tracker name"
         textField.layer.masksToBounds = true
         textField.layer.cornerRadius = 16
         return textField
@@ -181,6 +182,8 @@ final class TrackerCardViewController: UIViewController {
         textFieldConfig()
         horizontalStackViewConfig()
         textField.delegate = self
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -252,6 +255,10 @@ final class TrackerCardViewController: UIViewController {
     }
     
     // MARK: - Objective-C functions
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
     
     @objc
     func didTapCategoryButton() {
