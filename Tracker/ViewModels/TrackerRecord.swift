@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 
 struct TrackerRecord: Hashable {
     let id: UUID

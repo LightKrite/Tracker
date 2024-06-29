@@ -2,7 +2,7 @@ import UIKit
 
 final class SupplementaryView: UICollectionReusableView {
     
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
        let title = UILabel()
         title.font = UIFont.systemFont(ofSize: 19, weight: .bold)
         title.textAlignment = .left
@@ -18,6 +18,10 @@ final class SupplementaryView: UICollectionReusableView {
             titleLabel.topAnchor.constraint(equalTo: topAnchor),
             titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+    }
+    
+    func changeTitle(title: String) {
+        self.titleLabel.text = title
     }
     
     required init?(coder: NSCoder) {
