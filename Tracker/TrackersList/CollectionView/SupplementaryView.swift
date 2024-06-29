@@ -3,7 +3,7 @@ import UIKit
 final class SupplementaryView: UICollectionReusableView {
     
     private let titleLabel: UILabel = {
-       let title = UILabel()
+        let title = UILabel()
         title.font = UIFont.systemFont(ofSize: 19, weight: .bold)
         title.textAlignment = .left
         title.translatesAutoresizingMaskIntoConstraints = false

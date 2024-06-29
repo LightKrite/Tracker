@@ -34,7 +34,7 @@ final class TrackerStore: NSObject {
     
     private let context: NSManagedObjectContext
     private var fetchedResultsController: NSFetchedResultsController<TrackerCoreData>?
-
+    
     weak var delegate: TrackerStoreDelegate?
     private var insertedIndexes: IndexSet?
     private var deletedIndexes: IndexSet?
@@ -164,8 +164,8 @@ final class TrackerStore: NSObject {
     private func scheduleString(from schedule: Schedule) -> String {
         var scheduleString: [String] = []
         schedule.days.forEach { day in
-                    let string = day.rawValue
-                    scheduleString.append(string)
+            let string = day.rawValue
+            scheduleString.append(string)
         }
         return scheduleString.joined(separator: ",")
     }

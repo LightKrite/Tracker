@@ -11,7 +11,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         UIColorValueTransformer.register()
         return true
     }
-
+    
     // MARK: UISceneSession Lifecycle
     func application(
         _ application: UIApplication,

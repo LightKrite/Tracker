@@ -274,20 +274,20 @@ extension TrackerCardViewController {
         } else {
             newTrackerColor = colors.randomElement() ?? .black
         }
-            var schedule = Schedule(
-                days: newTrackerDays)
-            if titleLabel.text != newHabit {
-                let unregularSchedule = Schedule(
-                    days: WeekDay.allCases.filter { $0 != WeekDay.empty })
-                schedule = unregularSchedule
-            }
-            let newTracker: Tracker = Tracker(
-                id: newTrackerId,
-                name: newTrackerName,
-                color: newTrackerColor,
-                emoji: newTrackerEmoji,
-                schedule: schedule)
-            return newTracker
+        var schedule = Schedule(
+            days: newTrackerDays)
+        if titleLabel.text != newHabit {
+            let unregularSchedule = Schedule(
+                days: WeekDay.allCases.filter { $0 != WeekDay.empty })
+            schedule = unregularSchedule
+        }
+        let newTracker: Tracker = Tracker(
+            id: newTrackerId,
+            name: newTrackerName,
+            color: newTrackerColor,
+            emoji: newTrackerEmoji,
+            schedule: schedule)
+        return newTracker
         
     }
     

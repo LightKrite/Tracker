@@ -129,14 +129,14 @@ extension TrackersListViewController: TrackerStoreDelegate {
 }
 
 extension TrackersListViewController: TrackerCategoryStoreDelegate {
-
+    
     func store(_ store: TrackerCategoryStore, didUpdate update: TrackerCategoryStoreUpdate) {
         // TODO: - 16 Sprint - Categories update
     }
 }
 
 extension TrackersListViewController: TrackerRecordStoreDelegate {
-
+    
     func store(_ store: TrackerRecordStore, didUpdate update: TrackerRecordStoreUpdate) {
         reloadVisibleCategories()
     }
@@ -151,7 +151,7 @@ extension TrackersListViewController {
         
         let filterWeekDay = datePicker.date.dayOfWeek()
         let filterText = (searchBar.text ?? "").lowercased()
-
+        
         var notEmptyCategories: [TrackerCategory] = []
         for category in 0 ..< trackerCategoryStore.categories.count {
             if trackerCategoryStore.categories[category].trackers.count != 0 {

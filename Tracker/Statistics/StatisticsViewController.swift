@@ -10,7 +10,7 @@ final class StatisticsViewController: UIViewController {
     }()
     
     private let emptyStatisticsLabel: UILabel = {
-       var label = UILabel()
+        var label = UILabel()
         label.text = "Nothing to analize"
         label.font = UIFont.systemFont(ofSize: 12)
         label.textAlignment = .center
@@ -48,7 +48,7 @@ final class StatisticsViewController: UIViewController {
         NSLayoutConstraint.activate([
             statisticsLabel.bottomAnchor.constraint(equalTo: navBar.bottomAnchor, constant: -53),
             statisticsLabel.leadingAnchor.constraint(equalTo: navBar.leadingAnchor, constant: 16)
-            ])
+        ])
         
     }
     

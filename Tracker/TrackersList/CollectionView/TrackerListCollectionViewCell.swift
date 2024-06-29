@@ -26,7 +26,7 @@ final class TrackersListCollectionViewCell: UICollectionViewCell {
     }()
     
     private let cellEmojiLabel: UILabel = {
-       var label = UILabel()
+        var label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -34,7 +34,7 @@ final class TrackersListCollectionViewCell: UICollectionViewCell {
     }()
     
     private let cellTrackerLabel: UILabel = {
-       var label = UILabel()
+        var label = UILabel()
         label.text = "Something that user printed is shown here"
         label.font = UIFont.systemFont(ofSize: 12)
         label.lineBreakMode = .byWordWrapping
@@ -63,7 +63,7 @@ final class TrackersListCollectionViewCell: UICollectionViewCell {
     }()
     
     private let cellDaysCounterLabel: UILabel = {
-       var label = UILabel()
+        var label = UILabel()
         label.text = "0 days"
         label.font = UIFont.systemFont(ofSize: 12)
         label.textAlignment = .left
@@ -113,7 +113,7 @@ final class TrackersListCollectionViewCell: UICollectionViewCell {
     
     private func pluralizeDays(_ completedDays: Int) -> String {
         switch completedDays {
-            case 0:
+        case 0:
             return "0 days"
         case 1:
             return "1 day"
@@ -130,7 +130,7 @@ final class TrackersListCollectionViewCell: UICollectionViewCell {
     func didTapCellPlusButton() {
         guard
             let trackerId = trackerId,
-                let indexPath = indexPath
+            let indexPath = indexPath
         else { return }
         if isCompletedToday {
             self.delegate?.uncompleteTracker(id: trackerId, at: indexPath)

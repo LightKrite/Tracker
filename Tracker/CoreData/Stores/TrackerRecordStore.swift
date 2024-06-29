@@ -32,7 +32,7 @@ final class TrackerRecordStore: NSObject {
     
     private let context: NSManagedObjectContext
     private var fetchedResultsController: NSFetchedResultsController<TrackerRecordCoreData>?
-
+    
     weak var delegate: TrackerRecordStoreDelegate?
     private var insertedIndexes: IndexSet?
     private var deletedIndexes: IndexSet?
@@ -46,7 +46,7 @@ final class TrackerRecordStore: NSObject {
         else { return [] }
         return trackers
     }
-
+    
     convenience override init() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             fatalError("AppDelegate init error")
@@ -54,7 +54,7 @@ final class TrackerRecordStore: NSObject {
         let context = appDelegate.persistentContainer.viewContext
         self.init(context: context)
     }
-
+    
     init(context: NSManagedObjectContext) {
         self.context = context
         super.init()
@@ -88,13 +88,13 @@ final class TrackerRecordStore: NSObject {
             id: id,
             date: date)
     }
-
+    
     func addNewTrackerRecord(_ trackerRecord: TrackerRecord) throws {
         let trackerRecordCoreData = TrackerRecordCoreData(context: context)
         updateExistingTrackerRecord(trackerRecordCoreData, with: trackerRecord)
         try context.save()
     }
-
+    
     private func updateExistingTrackerRecord(_ trackerRecordCoreData: TrackerRecordCoreData, with trackerRecord: TrackerRecord) {
         
         trackerRecordCoreData.id = trackerRecord.id
@@ -136,7 +136,7 @@ extension TrackerRecordStore: NSFetchedResultsControllerDelegate {
         updatedIndexes = IndexSet()
         movedIndexes = Set<TrackerRecordStoreUpdate.Move>()
     }
-
+    
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         delegate?.store(
             self,
@@ -152,7 +152,7 @@ extension TrackerRecordStore: NSFetchedResultsControllerDelegate {
         updatedIndexes = nil
         movedIndexes = nil
     }
-
+    
     func controller(
         _ controller: NSFetchedResultsController<NSFetchRequestResult>,
         didChange anObject: Any,

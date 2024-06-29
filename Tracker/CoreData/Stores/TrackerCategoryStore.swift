@@ -31,7 +31,7 @@ final class TrackerCategoryStore: NSObject {
     
     private let context: NSManagedObjectContext
     private var fetchedResultsController: NSFetchedResultsController<TrackerCategoryCoreData>?
-
+    
     weak var delegate: TrackerCategoryStoreDelegate?
     private var insertedIndexes: IndexSet?
     private var deletedIndexes: IndexSet?
@@ -45,7 +45,7 @@ final class TrackerCategoryStore: NSObject {
         else { return [] }
         return categories
     }
-
+    
     convenience override init() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             fatalError("AppDelegate init error")
@@ -53,7 +53,7 @@ final class TrackerCategoryStore: NSObject {
         let context = appDelegate.persistentContainer.viewContext
         self.init(context: context)
     }
-
+    
     init(context: NSManagedObjectContext) {
         self.context = context
         super.init()
@@ -98,13 +98,13 @@ final class TrackerCategoryStore: NSObject {
         }
         return trackers
     }
-
+    
     func addNewTrackerCategory(_ trackerCategory: TrackerCategory) throws {
         let trackerCategoryCoreData = TrackerCategoryCoreData(context: context)
         updateExistingTrackerCategories(trackerCategoryCoreData, with: trackerCategory)
         try context.save()
     }
-
+    
     private func updateExistingTrackerCategories(_ trackerCategoryCoreData: TrackerCategoryCoreData, with trackerCategory: TrackerCategory) {
         let category = TrackerCategory(
             name: trackerCategory.name,
@@ -121,7 +121,7 @@ extension TrackerCategoryStore: NSFetchedResultsControllerDelegate {
         updatedIndexes = IndexSet()
         movedIndexes = Set<TrackerCategoryStoreUpdate.Move>()
     }
-
+    
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         delegate?.store(
             self,
@@ -137,7 +137,7 @@ extension TrackerCategoryStore: NSFetchedResultsControllerDelegate {
         updatedIndexes = nil
         movedIndexes = nil
     }
-
+    
     func controller(
         _ controller: NSFetchedResultsController<NSFetchRequestResult>,
         didChange anObject: Any,

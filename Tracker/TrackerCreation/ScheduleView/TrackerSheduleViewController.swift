@@ -117,24 +117,24 @@ extension TrackerScheduleViewController: TrackerScheduleTableViewCellDelegate {
         let currentArrayNumber = newWeekDaysNamesArray[indexPath.row]
         if currentArrayNumber != WeekDay.empty {
             newWeekDaysNamesArray[indexPath.row] = WeekDay.empty
-            } else {
-                switch indexPath.row {
-                case 1:
-                    newWeekDaysNamesArray[indexPath.row] = .tuesday
-                case 2:
-                    newWeekDaysNamesArray[indexPath.row] = .wednesday
-                case 3:
-                    newWeekDaysNamesArray[indexPath.row] = .thursday
-                case 4:
-                    newWeekDaysNamesArray[indexPath.row] = .friday
-                case 5:
-                    newWeekDaysNamesArray[indexPath.row] = .saturday
-                case 6:
-                    newWeekDaysNamesArray[indexPath.row] = .sunday
-                default:
-                    newWeekDaysNamesArray[indexPath.row] = .monday
-                }
+        } else {
+            switch indexPath.row {
+            case 1:
+                newWeekDaysNamesArray[indexPath.row] = .tuesday
+            case 2:
+                newWeekDaysNamesArray[indexPath.row] = .wednesday
+            case 3:
+                newWeekDaysNamesArray[indexPath.row] = .thursday
+            case 4:
+                newWeekDaysNamesArray[indexPath.row] = .friday
+            case 5:
+                newWeekDaysNamesArray[indexPath.row] = .saturday
+            case 6:
+                newWeekDaysNamesArray[indexPath.row] = .sunday
+            default:
+                newWeekDaysNamesArray[indexPath.row] = .monday
             }
+        }
     }
 }
 
