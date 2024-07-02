@@ -24,19 +24,21 @@ final class StatisticsViewController: UIViewController {
         return bar
     }()
     
-    var statisticsLabel: UILabel = {
+    private var statisticsLabel: UILabel = {
         var label = UILabel()
         label.text = "Statistics"
-        label.font = UIFont.systemFont(ofSize: 34)
+        label.font = UIFont.systemFont(ofSize: 34, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
+    // MARK: - ViewDidLoad()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.accessibilityLabel = "StatisticsViewController"
-        
+        self.toggleAppearance(isDark: TabBarController().isDark)
         showEmptyStatisticsInfo()
+        hideKeyboardWhenTappedAround()
         
         // NavBar
         view.addSubview(navBar)
@@ -55,7 +57,8 @@ final class StatisticsViewController: UIViewController {
         
     }
     
-    func showEmptyStatisticsInfo() {
+    // MARK: - Configure constraints
+    private func showEmptyStatisticsInfo() {
         view.addSubview(emptyStatisticsLabel)
         view.addSubview(emptyStatisticsImageView)
         NSLayoutConstraint.activate([
@@ -66,4 +69,5 @@ final class StatisticsViewController: UIViewController {
             emptyStatisticsLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: -171.5)
         ])
     }
+    
 }

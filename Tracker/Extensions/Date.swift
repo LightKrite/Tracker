@@ -1,7 +1,6 @@
 import Foundation
 
 extension Date {
-    
     static let formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE, dd MMM yyyy HH:mm:ss Z"

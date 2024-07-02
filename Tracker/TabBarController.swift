@@ -2,10 +2,16 @@ import UIKit
 
 final class TabBarController: UITabBarController, UITabBarControllerDelegate {
     
-    var selectedTabBar: Int = 0
+    private var selectedTabBar: Int = 0
+    
+    var isDark = true { didSet { setNeedsStatusBarAppearanceUpdate() }}
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return isDark ? .darkContent : .lightContent
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.toggleAppearance(isDark: isDark)
         view.backgroundColor = UIColor(named: "YP White")
         tabBar.backgroundColor = UIColor(named: "YP White")
         tabBar.layer.borderWidth = 0.3
@@ -16,7 +22,7 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let firstItem = TrackersViewController()
+        let firstItem = TrackersListViewController()
         let firstItemIcon = UITabBarItem(title: "Trakers", image: UIImage(named: "TabBarRecordOff"), selectedImage: UIImage(named: "TabBarRecordOn"))
         firstItem.tabBarItem = firstItemIcon
         let secondItem = StatisticsViewController()
@@ -36,4 +42,5 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
         
         print("Did select viewController: \(viewController.accessibilityLabel ?? "") /n selectedTabBar = \(selectedTabBar)")
     }
+    
 }
