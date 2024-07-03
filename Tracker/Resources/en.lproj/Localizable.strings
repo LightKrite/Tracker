@@ -1,0 +1,61 @@
+
+
+// OnboardingViewController
+"mainLabel.text.first" = "Track only what you want";
+"mainLabel.text.second" = "Even if it`s not liters of water and yoga";
+"actionButton.title" = "Wow, amazing technologies!";
+// TabBarController
+"tabBar.titles.first" = "Trackers";
+"tabBar.titles.second" = "Statistics";
+// TrackersListViewController
+"emptyTrackersLabel" = "What we will watch?";
+"trackersLabel" = "Trackers";
+"searchBar.placeholder" = "Search";
+// Statistics
+"emptyStatisticsLabel" = "Nothing to analize";
+"statisticsLabel" = "Statistics";
+// TrackerTypeViewController
+"trackerType.title" = "Creation of tracker";
+"regularTrackerButton" = "Regular";
+"unregularTrackerButton" = "Unregular";
+// TrackerCardViewController
+"categoryButtonTitle" = "Category";
+"scheduleButtonTitle" = "Schedule";
+"trackerCard.titles.first" = "New habit";
+"trackerCard.titles.second" = "New unregular tracker";
+"trackerCard.textField.placeholder" = "Enter tracker name";
+"trackerCard.cancelButton" = "Cancel";
+"trackerCard.createNewTrackerButton" = "Create";
+"trackerCard.scheduleButtonTitleText.allCases" = "Everyday";
+"trackerCard.scheduleButtonTitleText.weekDays" = "WeekDays";
+"trackerCard.scheduleButtonTitleText.weekEnds" = "Weekends";
+"trackerCard.collectionView.titles.first" = "Emoji";
+"trackerCard.collectionView.titles.second" = "Color";
+// TrackerCategoryViewController
+"trackerCategory.title" = "Category";
+"trackerCategory.addNewCategoryButton" = "Add new category";
+"trackerCategory.emptyCategoriesLabel" = "Habits and unregular events \n can be combined by meaning";
+// TrackerCategoryNameViewController
+"trackerCategoryName.title" = "New category";
+"trackerCategoryName.textField.placeholder" = "Enter category name";
+"createNewCategoryButton" = "OK";
+// TrackerScheduleViewController
+"trackerSchedule.title" = "Schedule";
+"acceptScheduleButton" = "OK";
+
+// enum WeekDay
+"monday" = "Monday";
+"tuesday" = "Tuesday";
+"wednesday" = "Wednesday";
+"thursday" = "Thursday";
+"friday" = "Friday";
+"saturday" = "Saturday";
+"sunday" = "Sunday";
+
+"mondayPrefixed" = "Mon";
+"tuesdayPrefixed" = "Tue";
+"wednesdayPrefixed" = "Wed";
+"thursdayPrefixed" = "Thu";
+"fridayPrefixed" = "Fri";
+"saturdayPrefixed" = "Sat";
+"sundayPrefixed" = "Sun";

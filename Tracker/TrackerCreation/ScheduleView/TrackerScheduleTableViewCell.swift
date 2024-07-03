@@ -60,7 +60,8 @@ final class TrackerScheduleTableViewCell: UITableViewCell {
     
     func configCell(
         at indexPath: IndexPath,
-        array: [WeekDay]
+        array: [WeekDay],
+        localizedArray: [String]
     ) {
         let items = TrackerScheduleTableViewCellViewModel(
             scheduleView: scheduleView,
@@ -69,8 +70,7 @@ final class TrackerScheduleTableViewCell: UITableViewCell {
             scheduleFooterView: scheduleFooterView)
         let cornersArray: [CACornerMask] = [[.layerMinXMinYCorner, .layerMaxXMinYCorner],[],[],[],[],[],[.layerMinXMaxYCorner, .layerMaxXMaxYCorner]]
         items.scheduleView.layer.maskedCorners = cornersArray[indexPath.row]
-        let daysArray: [WeekDay] = WeekDay.allCases
-        items.scheduleLabel.text = daysArray[indexPath.row].rawValue
+        items.scheduleLabel.text = localizedArray[indexPath.row]
         items.scheduleSwitch.isOn = (array[indexPath.row] != .empty)
         let alpha = [1.0,1.0,1.0,1.0,1.0,1.0,0]
         items.scheduleFooterView.alpha = alpha[indexPath.row]

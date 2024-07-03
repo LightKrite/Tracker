@@ -14,5 +14,4 @@ extension UILabel {
                           ))
         attributedText = attributedString
     }
-    
 }

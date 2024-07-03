@@ -10,8 +10,8 @@ final class StatisticsViewController: UIViewController {
     }()
     
     private let emptyStatisticsLabel: UILabel = {
-        var label = UILabel()
-        label.text = "Nothing to analize"
+       var label = UILabel()
+        label.text = NSLocalizedString("emptyStatisticsLabel", comment: "Nothing to analize")
         label.font = UIFont.systemFont(ofSize: 12)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -26,7 +26,7 @@ final class StatisticsViewController: UIViewController {
     
     private var statisticsLabel: UILabel = {
         var label = UILabel()
-        label.text = "Statistics"
+        label.text = NSLocalizedString("statisticsLabel", comment: "Statistics Label")
         label.font = UIFont.systemFont(ofSize: 34, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -38,7 +38,6 @@ final class StatisticsViewController: UIViewController {
         self.accessibilityLabel = "StatisticsViewController"
         self.toggleAppearance(isDark: TabBarController().isDark)
         showEmptyStatisticsInfo()
-        hideKeyboardWhenTappedAround()
         
         // NavBar
         view.addSubview(navBar)
@@ -48,7 +47,7 @@ final class StatisticsViewController: UIViewController {
         NSLayoutConstraint.activate([
             statisticsLabel.bottomAnchor.constraint(equalTo: navBar.bottomAnchor, constant: -53),
             statisticsLabel.leadingAnchor.constraint(equalTo: navBar.leadingAnchor, constant: 16)
-        ])
+            ])
         
     }
     

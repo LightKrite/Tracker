@@ -3,7 +3,8 @@ import Foundation
 extension Date {
     static let formatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE, dd MMM yyyy HH:mm:ss Z"
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
         formatter.timeZone = .current
         return formatter
     }()
@@ -28,6 +29,7 @@ extension Date {
     
     func dayOfWeek() -> String {
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en")
         dateFormatter.dateFormat = "EEEE"
         return dateFormatter.string(from: self).capitalized
     }

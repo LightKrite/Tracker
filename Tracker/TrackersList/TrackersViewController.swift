@@ -1,12 +1,6 @@
 import UIKit
 
-protocol TrackersListViewControllerDelegate: AnyObject {
-    func sendCategoriesToTrackerCardViewController(_ categories: [TrackerCategory])
-}
-
 final class TrackersListViewController: UIViewController {
-    
-    weak var delegate: TrackersListViewControllerDelegate?
     
     // MARK: - Properties for CoreData
     private let trackerCategoryStore = TrackerCategoryStore()
@@ -44,7 +38,7 @@ final class TrackersListViewController: UIViewController {
     }()
     private let emptyTrackersLabel: UILabel = {
         var label = UILabel()
-        label.text = "What we will watch?"
+        label.text = NSLocalizedString("emptyTrackersLabel", comment: "Info text")
         label.font = UIFont.systemFont(ofSize: 12)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -63,7 +57,7 @@ final class TrackersListViewController: UIViewController {
     }()
     private var trackersLabel: UILabel = {
         var label = UILabel()
-        label.text = "Trackers"
+        label.text = NSLocalizedString("trackersLabel", comment: "Trackers")
         label.font = UIFont.systemFont(ofSize: 34, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -76,7 +70,7 @@ final class TrackersListViewController: UIViewController {
     private lazy var searchBar: UISearchBar = {
         var searchBar = UISearchBar()
         searchBar.searchBarStyle = UISearchBar.Style.default
-        searchBar.placeholder = "Search"
+        searchBar.placeholder = NSLocalizedString("searchBar.placeholder", comment: "SearchBar placeholder")
         searchBar.sizeToFit()
         searchBar.isTranslucent = true
         searchBar.backgroundImage = UIImage()
@@ -102,20 +96,13 @@ final class TrackersListViewController: UIViewController {
         view.backgroundColor = .white
         addTopBar()
         collectionViewConfig()
-        hideKeyboardWhenTappedAround()
         
         // MARK: - CoreData
         
         trackerStore.delegate = self
         trackerCategoryStore.delegate = self
         trackerRecordStore.delegate = self
-        
-        // TODO: - 16 Sprint - Replace mock category
-        if trackerCategoryStore.categories.isEmpty {
-            let mockCategory = TrackerCategory(name: "New mock category", trackers: [])
-            try? trackerCategoryStore.addNewTrackerCategory(mockCategory)
-        }
-        
+
         reloadVisibleCategories()
     }
 }
@@ -123,20 +110,19 @@ final class TrackersListViewController: UIViewController {
 extension TrackersListViewController: TrackerStoreDelegate {
     func store(_ store: TrackerStore, didUpdate update: TrackerStoreUpdate) {
         reloadVisibleCategories()
-        // TODO: - 16 Sprint - PerformBatchUpdates
-        //collectionViewPerformBatchUpdates(using: update)
+        // TODO: - PerformBatchUpdates
     }
 }
 
 extension TrackersListViewController: TrackerCategoryStoreDelegate {
-    
+
     func store(_ store: TrackerCategoryStore, didUpdate update: TrackerCategoryStoreUpdate) {
-        // TODO: - 16 Sprint - Categories update
+        // TODO: - Categories update
     }
 }
 
 extension TrackersListViewController: TrackerRecordStoreDelegate {
-    
+
     func store(_ store: TrackerRecordStore, didUpdate update: TrackerRecordStoreUpdate) {
         reloadVisibleCategories()
     }
@@ -151,14 +137,11 @@ extension TrackersListViewController {
         
         let filterWeekDay = datePicker.date.dayOfWeek()
         let filterText = (searchBar.text ?? "").lowercased()
+
         
-        var notEmptyCategories: [TrackerCategory] = []
-        for category in 0 ..< trackerCategoryStore.categories.count {
-            if trackerCategoryStore.categories[category].trackers.count != 0 {
-                notEmptyCategories.append(trackerCategoryStore.categories[category])
-            }
-        }
-        visibleCategories = notEmptyCategories.map { category in
+        var filteredCategories: [TrackerCategory] = []
+        
+        filteredCategories = trackerCategoryStore.categories.compactMap { category in
             let trackers = category.trackers.filter { tracker in
                 let textCondition = filterText.isEmpty ||
                 tracker.name.lowercased().contains(filterText)
@@ -170,7 +153,11 @@ extension TrackersListViewController {
             return TrackerCategory(
                 name: category.name,
                 trackers: trackers)
+            
         }
+        
+        visibleCategories = filteredCategories.filter { $0.trackers.count != 0 }
+        
         collectionView.reloadData()
         showOrHideEmptyTrackersInfo()
     }
@@ -179,11 +166,7 @@ extension TrackersListViewController {
         if visibleCategories.count == 0 {
             showEmptyTrackersInfo()
         } else {
-            if visibleCategories[0].trackers.count == 0 {
-                showEmptyTrackersInfo()
-            } else {
-                hideEmptyTrackersInfo()
-            }
+            hideEmptyTrackersInfo()
         }
     }
     
@@ -192,8 +175,6 @@ extension TrackersListViewController {
     func didTapPlusButton() {
         let vc = TrackerTypeViewController()
         vc.delegate = self
-        self.delegate = vc
-        self.delegate?.sendCategoriesToTrackerCardViewController(trackerCategoryStore.categories)
         present(vc, animated: true)
     }
 }
@@ -202,7 +183,7 @@ extension TrackersListViewController {
 extension TrackersListViewController: TrackerCardViewControllerDelegate {
     func sendTrackerToTrackersListViewController(newTracker: Tracker, categoriesNames: [String]?, selectedCategoryRow: Int?) {
         
-        try? trackerStore.addNewTracker(newTracker)
+        try? trackerStore.addNewTracker(newTracker, selectedCategoryRow: selectedCategoryRow)
         
         dismiss(animated: true)
     }

@@ -31,7 +31,7 @@ final class TrackerCategoryStore: NSObject {
     
     private let context: NSManagedObjectContext
     private var fetchedResultsController: NSFetchedResultsController<TrackerCategoryCoreData>?
-    
+
     weak var delegate: TrackerCategoryStoreDelegate?
     private var insertedIndexes: IndexSet?
     private var deletedIndexes: IndexSet?
@@ -39,13 +39,14 @@ final class TrackerCategoryStore: NSObject {
     private var movedIndexes: Set<TrackerCategoryStoreUpdate.Move>?
     
     var categories: [TrackerCategory] {
-        guard
-            let objects = self.fetchedResultsController?.fetchedObjects,
-            let categories = try? objects.map({ try self.category(from: $0) })
+        guard let objects = self.fetchedResultsController?.fetchedObjects
+        else { return []}
+        let sortedObjects = objects.sorted(by: { $0.categoryId > $1.categoryId } )
+        guard let categories = try? sortedObjects.map({ try self.category(from: $0) })
         else { return [] }
         return categories
     }
-    
+
     convenience override init() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             fatalError("AppDelegate init error")
@@ -53,7 +54,7 @@ final class TrackerCategoryStore: NSObject {
         let context = appDelegate.persistentContainer.viewContext
         self.init(context: context)
     }
-    
+
     init(context: NSManagedObjectContext) {
         self.context = context
         super.init()
@@ -98,19 +99,47 @@ final class TrackerCategoryStore: NSObject {
         }
         return trackers
     }
-    
+
     func addNewTrackerCategory(_ trackerCategory: TrackerCategory) throws {
         let trackerCategoryCoreData = TrackerCategoryCoreData(context: context)
         updateExistingTrackerCategories(trackerCategoryCoreData, with: trackerCategory)
         try context.save()
     }
-    
+
     private func updateExistingTrackerCategories(_ trackerCategoryCoreData: TrackerCategoryCoreData, with trackerCategory: TrackerCategory) {
         let category = TrackerCategory(
             name: trackerCategory.name,
             trackers: trackerCategory.trackers
         )
         trackerCategoryCoreData.name = category.name
+        trackerCategoryCoreData.categoryId = Int32(categories.count)
+    }
+    
+    func getSortedCategories() -> [TrackerCategory]{
+        guard let objects = fetchAllCategories(with: context)
+        else { return [] }
+        let sortedObjects = objects.sorted(by: { $0.categoryId < $1.categoryId } )
+        guard let categories = try? sortedObjects.map({ try self.category(from: $0) })
+        else { return [] }
+        return categories
+    }
+    
+    private func fetchAllCategories(with context: NSManagedObjectContext) -> [TrackerCategoryCoreData]? {
+        let request = TrackerCategoryCoreData.fetchRequest()
+        request.returnsObjectsAsFaults = false
+        request.sortDescriptors = [NSSortDescriptor(key: "categoryId", ascending: false)]
+        let objects = try? context.fetch(request)
+        return objects
+    }
+    
+    func deleteAll() throws {
+        guard let objects = fetchAllCategories(with: context) else {
+            return
+        }
+        for object in objects {
+            context.delete(object)
+        }
+        try context.save()
     }
 }
 
@@ -121,7 +150,7 @@ extension TrackerCategoryStore: NSFetchedResultsControllerDelegate {
         updatedIndexes = IndexSet()
         movedIndexes = Set<TrackerCategoryStoreUpdate.Move>()
     }
-    
+
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         delegate?.store(
             self,
@@ -137,7 +166,7 @@ extension TrackerCategoryStore: NSFetchedResultsControllerDelegate {
         updatedIndexes = nil
         movedIndexes = nil
     }
-    
+
     func controller(
         _ controller: NSFetchedResultsController<NSFetchRequestResult>,
         didChange anObject: Any,
