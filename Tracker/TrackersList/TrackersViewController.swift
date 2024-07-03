@@ -96,6 +96,7 @@ final class TrackersListViewController: UIViewController {
         view.backgroundColor = .white
         addTopBar()
         collectionViewConfig()
+        hideKeyboardWhenTappedAround()
         
         // MARK: - CoreData
         

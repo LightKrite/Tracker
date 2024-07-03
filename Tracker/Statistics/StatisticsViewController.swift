@@ -38,6 +38,7 @@ final class StatisticsViewController: UIViewController {
         self.accessibilityLabel = "StatisticsViewController"
         self.toggleAppearance(isDark: TabBarController().isDark)
         showEmptyStatisticsInfo()
+        hideKeyboardWhenTappedAround()
         
         // NavBar
         view.addSubview(navBar)

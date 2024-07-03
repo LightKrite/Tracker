@@ -104,6 +104,7 @@ final class TrackerCategoryViewController: UIViewController {
         view.backgroundColor = UIColor(named: "YP White")
         titleConfig()
         addNewCategoryButtonConfig()
+        hideKeyboardWhenTappedAround()
         viewModel = TrackerCategoryViewModel()
         categoriesNames = getCategoriesNamesFromStore()
         

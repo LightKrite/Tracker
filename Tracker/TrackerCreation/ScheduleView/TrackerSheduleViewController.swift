@@ -68,6 +68,7 @@ final class TrackerScheduleViewController: UIViewController {
         self.toggleAppearance(isDark: TabBarController().isDark)
         view.backgroundColor = UIColor(named: "YP White")
         titleConfig()
+        hideKeyboardWhenTappedAround()
         acceptScheduleButtonConfig()
         tableViewConfig()
     }

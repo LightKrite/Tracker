@@ -69,6 +69,7 @@ final class TrackerTypeViewController: UIViewController {
         view.backgroundColor = UIColor(named: "YP White")
         titleConfig()
         stackViewConfig()
+        hideKeyboardWhenTappedAround()
     }
     
     // MARK: - Objective-C functions

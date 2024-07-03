@@ -65,6 +65,7 @@ final class TrackerCategoryNameViewController: UIViewController {
         view.backgroundColor = UIColor(named: "YP White")
         titleConfig()
         textFieldConfig()
+        hideKeyboardWhenTappedAround()
         textField.delegate = self
         createNewCategoryButtonConfig()
         createNewCategoryButtonIsActive(newCategoryName.count > 0)
