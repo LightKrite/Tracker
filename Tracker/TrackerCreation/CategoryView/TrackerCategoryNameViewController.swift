@@ -1,25 +1,18 @@
 import UIKit
 
 protocol TrackerCategoryNameViewControllerDelegate: AnyObject {
-    func sendCategoryNameToTrackerCategoryViewController(categoryName: String)
+    func dismissTrackerCategoryNameViewController()
 }
 
 final class TrackerCategoryNameViewController: UIViewController {
     
+    // MARK: - Properties for CoreData
+    private let trackerCategoryStore = TrackerCategoryStore()
+    
+    // MARK: - Properties
     weak var delegate: TrackerCategoryNameViewControllerDelegate?
     
     private var newCategoryName: String = ""
-    
-    private var currentCategoriesNames: [String]
-    
-    init(currentCategoriesNames: [String]) {
-        self.currentCategoriesNames = currentCategoriesNames
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     // MARK: - Mutable properties:
     
@@ -31,7 +24,7 @@ final class TrackerCategoryNameViewController: UIViewController {
     
     var titleLabel: UILabel = {
         var label = UILabel()
-        label.text = "New category"
+        label.text = NSLocalizedString("trackerCategoryName.title", comment: "Category title")
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -42,8 +35,9 @@ final class TrackerCategoryNameViewController: UIViewController {
         let textField = TextFieldWithPadding()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = UIColor(named: "YP LightGrey")?.withAlphaComponent(0.3)
+        textField.placeholder = NSLocalizedString("trackerCategoryName.textField.placeholder", comment: "TextField placeholder")
+
         textField.clearButtonMode = .whileEditing
-        textField.placeholder = "Enter category name"
         textField.layer.masksToBounds = true
         textField.layer.cornerRadius = 16
         return textField
@@ -55,7 +49,7 @@ final class TrackerCategoryNameViewController: UIViewController {
             target: self,
             action: #selector(didTapCreateNewCategoryButton)
         )
-        button.setTitle("OK", for: .normal)
+        button.setTitle( NSLocalizedString("createNewCategoryButton", comment: "Category creation button title"), for: .normal)
         button.setTitleColor(UIColor(named: "YP White"), for: .normal)
         button.backgroundColor = UIColor(named: "YP Black")
         button.layer.cornerRadius = 16
@@ -71,10 +65,10 @@ final class TrackerCategoryNameViewController: UIViewController {
         view.backgroundColor = UIColor(named: "YP White")
         titleConfig()
         textFieldConfig()
+        hideKeyboardWhenTappedAround()
         textField.delegate = self
         createNewCategoryButtonConfig()
         createNewCategoryButtonIsActive(newCategoryName.count > 0)
-        hideKeyboardWhenTappedAround()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,7 +78,9 @@ final class TrackerCategoryNameViewController: UIViewController {
     // MARK: - Objective-C functions
     @objc
     func didTapCreateNewCategoryButton() {
-        self.delegate?.sendCategoryNameToTrackerCategoryViewController(categoryName: newCategoryName)
+        let newCategory = TrackerCategory(name: newCategoryName, trackers: [])
+        try? trackerCategoryStore.addNewTrackerCategory(newCategory)
+        self.delegate?.dismissTrackerCategoryNameViewController()
     }
 }
 
@@ -94,7 +90,7 @@ extension TrackerCategoryNameViewController: UITextFieldDelegate {
         let updatedString = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
         guard let updatedString = updatedString else { return false }
         newCategoryName = updatedString
-        createNewCategoryButtonIsActive(newCategoryName.count > 0 && !currentCategoriesNames.contains(newCategoryName))
+        createNewCategoryButtonIsActive(newCategoryName.count > 0)
         return true
     }
     

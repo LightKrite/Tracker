@@ -29,7 +29,7 @@ final class TrackerScheduleViewController: UIViewController {
     
     private var titleLabel: UILabel = {
         var label = UILabel()
-        label.text = "Schedule"
+        label.text = NSLocalizedString("trackerSchedule.title", comment: "Schedule title")
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -53,7 +53,7 @@ final class TrackerScheduleViewController: UIViewController {
             target: self,
             action: #selector(didTapAcceptScheduleButton)
         )
-        button.setTitle("Accept", for: .normal)
+        button.setTitle(NSLocalizedString("acceptScheduleButton", comment: "Accept schedule button title"), for: .normal)
         button.setTitleColor(UIColor(named: "YP White"), for: .normal)
         button.backgroundColor = UIColor(named: "YP Black")
         button.layer.cornerRadius = 16
@@ -68,9 +68,9 @@ final class TrackerScheduleViewController: UIViewController {
         self.toggleAppearance(isDark: TabBarController().isDark)
         view.backgroundColor = UIColor(named: "YP White")
         titleConfig()
+        hideKeyboardWhenTappedAround()
         acceptScheduleButtonConfig()
         tableViewConfig()
-        hideKeyboardWhenTappedAround()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -104,7 +104,16 @@ extension TrackerScheduleViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         TrackerScheduleTableViewCell.delegate = self
-        TrackerScheduleTableViewCell.configCell(at: indexPath, array: newWeekDaysNamesArray)
+        let localizedArray: [String] = [
+            WeekDay.monday.description,
+            WeekDay.tuesday.description,
+            WeekDay.wednesday.description,
+            WeekDay.thursday.description,
+            WeekDay.friday.description,
+            WeekDay.saturday.description,
+            WeekDay.sunday.description,
+        ]
+        TrackerScheduleTableViewCell.configCell(at: indexPath, array: newWeekDaysNamesArray, localizedArray: localizedArray)
         return TrackerScheduleTableViewCell
     }
     
@@ -117,24 +126,24 @@ extension TrackerScheduleViewController: TrackerScheduleTableViewCellDelegate {
         let currentArrayNumber = newWeekDaysNamesArray[indexPath.row]
         if currentArrayNumber != WeekDay.empty {
             newWeekDaysNamesArray[indexPath.row] = WeekDay.empty
-        } else {
-            switch indexPath.row {
-            case 1:
-                newWeekDaysNamesArray[indexPath.row] = .tuesday
-            case 2:
-                newWeekDaysNamesArray[indexPath.row] = .wednesday
-            case 3:
-                newWeekDaysNamesArray[indexPath.row] = .thursday
-            case 4:
-                newWeekDaysNamesArray[indexPath.row] = .friday
-            case 5:
-                newWeekDaysNamesArray[indexPath.row] = .saturday
-            case 6:
-                newWeekDaysNamesArray[indexPath.row] = .sunday
-            default:
-                newWeekDaysNamesArray[indexPath.row] = .monday
+            } else {
+                switch indexPath.row {
+                case 1:
+                    newWeekDaysNamesArray[indexPath.row] = .tuesday
+                case 2:
+                    newWeekDaysNamesArray[indexPath.row] = .wednesday
+                case 3:
+                    newWeekDaysNamesArray[indexPath.row] = .thursday
+                case 4:
+                    newWeekDaysNamesArray[indexPath.row] = .friday
+                case 5:
+                    newWeekDaysNamesArray[indexPath.row] = .saturday
+                case 6:
+                    newWeekDaysNamesArray[indexPath.row] = .sunday
+                default:
+                    newWeekDaysNamesArray[indexPath.row] = .monday
+                }
             }
-        }
     }
 }
 

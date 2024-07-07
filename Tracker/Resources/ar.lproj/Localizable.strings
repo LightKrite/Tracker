@@ -1,0 +1,60 @@
+
+// OnboardingViewController
+"mainLabel.text.first" = "تتبع ما تريده فقط";
+"mainLabel.text.second" = "حتى لو لم يكن هناك لتر من الماء أو اليوغا";
+"actionButton.title" = "رائع، تقنيات مذهلة!";
+// TabBarController
+"tabBar.titles.first" = "أجهزة التتبع";
+"tabBar.titles.second" = "الإحصائيات";
+// TrackersListViewController
+"emptyTrackersLabel" = "ما الذي سنشاهده؟";
+"trackersLabel" = "أجهزة التتبع";
+"searchBar.placeholder" = "بحث";
+// إحصائيات
+"emptyStatisticsLabel" = "لا يوجد شيء لتحليله";
+"statisticsLabel" = "إحصائيات";
+// TrackerTypeViewController
+"trackerType.title" = "إنشاء المتعقب";
+"regularTrackerButton" = "منتظم";
+"unregularTrackerButton" = "غير منتظم";
+// TrackerCardViewController
+"categoryButtonTitle" = "الفئة";
+"scheduleButtonTitle" = "الجدول الزمني";
+"trackerCard.titles.first" = "عادة جديدة";
+"trackerCard.titles.second" = "متعقب جديد غير منتظم";
+"trackerCard.textField.placeholder" = "أدخل اسم التعقب";
+"trackerCard.cancelButton" = "إلغاء";
+"trackerCard.createNewTrackerButton" = "إنشاء";
+"trackerCard.scheduleButtonTitleText.allCases" = "كل يوم";
+"trackerCard.scheduleButtonTitleText.weekDays" = "أيام الأسبوع";
+"trackerCard.scheduleButtonTitleText.weekEnds" = "عطلات نهاية الأسبوع";
+"trackerCard.collectionView.titles.first" = "الرموز التعبيرية";
+"trackerCard.collectionView.titles.second" = "اللون";
+// TrackerCategoryViewController
+"trackerCategory.title" = "الفئة";
+"trackerCategory.addNewCategoryButton" = "أضف فئة جديدة";
+"trackerCategory.emptyCategoriesLabel" = "يمكن دمج العادات والأحداث غير المنتظمة \n بالمعنى";
+// TrackerCategoryNameViewController
+"trackerCategoryName.title" = "فئة جديدة";
+"trackerCategoryName.textField.placeholder" = "أدخل اسم الفئة";
+"createNewCategoryButton" = "موافق";
+// TrackerScheduleViewController
+"trackerSchedule.title" = "الجدول الزمني";
+"acceptScheduleButton" = "موافق";
+
+// enum WeekDay
+"monday" = "الاثنين";
+"tuesday" = "يوم الثلاثاء";
+"wednesday" = "الأربعاء";
+"thursday" = "يوم الخميس";
+"friday" = "جمعة";
+"saturday" = "السبت";
+"sunday" = "الأحد";
+
+"mondayPrefixed" = "Mon";
+"tuesdayPrefixed" = "Tue";
+"wednesdayPrefixed" = "Wed";
+"thursdayPrefixed" = "Thu";
+"fridayPrefixed" = "Fri";
+"saturdayPrefixed" = "Sat";
+"sundayPrefixed" = "Sun";

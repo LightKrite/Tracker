@@ -61,6 +61,7 @@ final class TrackerCardCollectionViewCell: UICollectionViewCell {
             cellBackgroundRound.heightAnchor.constraint(equalToConstant: 52),
             cellBackgroundRound.topAnchor.constraint(equalTo: contentView.topAnchor),
             cellBackgroundRound.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            cellBackgroundRound.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
             cellEmojiLabel.widthAnchor.constraint(equalToConstant: 52),
             cellEmojiLabel.leadingAnchor.constraint(equalTo: cellBackgroundRound.centerXAnchor, constant: -26),
