@@ -50,7 +50,18 @@
 		74A6B1D22C346CE1003F3130 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 74A6B1D42C346CE1003F3130 /* Localizable.strings */; };
 		74A6B1D92C346D0E003F3130 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 74A6B1DB2C346D0E003F3130 /* Localizable.stringsdict */; };
 		74A6B1E02C346D33003F3130 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 74A6B1E22C346D33003F3130 /* InfoPlist.strings */; };
+		74D8B1822C3C7FA700CD1FC0 /* TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D8B1812C3C7FA700CD1FC0 /* TrackerTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		74D8B1832C3C7FA700CD1FC0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 740D5DC52C1E11D500523879 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 740D5DCC2C1E11D500523879;
+			remoteInfo = Tracker;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		740D5DCD2C1E11D500523879 /* Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,10 +115,19 @@
 		74A6B1E12C346D33003F3130 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		74A6B1E32C346D37003F3130 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		74A6B1E42C346D37003F3130 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		74D8B17F2C3C7FA700CD1FC0 /* TrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		74D8B1812C3C7FA700CD1FC0 /* TrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		740D5DCA2C1E11D500523879 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74D8B17C2C3C7FA700CD1FC0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -121,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				740D5DCF2C1E11D500523879 /* Tracker */,
+				74D8B1802C3C7FA700CD1FC0 /* TrackerTests */,
 				740D5DCE2C1E11D500523879 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -129,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				740D5DCD2C1E11D500523879 /* Tracker.app */,
+				74D8B17F2C3C7FA700CD1FC0 /* TrackerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -304,6 +326,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		74D8B1802C3C7FA700CD1FC0 /* TrackerTests */ = {
+			isa = PBXGroup;
+			children = (
+				74D8B1812C3C7FA700CD1FC0 /* TrackerTests.swift */,
+			);
+			path = TrackerTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -324,6 +354,24 @@
 			productReference = 740D5DCD2C1E11D500523879 /* Tracker.app */;
 			productType = "com.apple.product-type.application";
 		};
+		74D8B17E2C3C7FA700CD1FC0 /* TrackerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74D8B1852C3C7FA700CD1FC0 /* Build configuration list for PBXNativeTarget "TrackerTests" */;
+			buildPhases = (
+				74D8B17B2C3C7FA700CD1FC0 /* Sources */,
+				74D8B17C2C3C7FA700CD1FC0 /* Frameworks */,
+				74D8B17D2C3C7FA700CD1FC0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				74D8B1842C3C7FA700CD1FC0 /* PBXTargetDependency */,
+			);
+			name = TrackerTests;
+			productName = TrackerTests;
+			productReference = 74D8B17F2C3C7FA700CD1FC0 /* TrackerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -336,6 +384,10 @@
 				TargetAttributes = {
 					740D5DCC2C1E11D500523879 = {
 						CreatedOnToolsVersion = 14.2;
+					};
+					74D8B17E2C3C7FA700CD1FC0 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 740D5DCC2C1E11D500523879;
 					};
 				};
 			};
@@ -355,6 +407,7 @@
 			projectRoot = "";
 			targets = (
 				740D5DCC2C1E11D500523879 /* Tracker */,
+				74D8B17E2C3C7FA700CD1FC0 /* TrackerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -369,6 +422,13 @@
 				74A6B1D22C346CE1003F3130 /* Localizable.strings in Resources */,
 				740D5DDA2C1E11D800523879 /* Assets.xcassets in Resources */,
 				74A6B1E02C346D33003F3130 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74D8B17D2C3C7FA700CD1FC0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,7 +480,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		74D8B17B2C3C7FA700CD1FC0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74D8B1822C3C7FA700CD1FC0 /* TrackerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		74D8B1842C3C7FA700CD1FC0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 740D5DCC2C1E11D500523879 /* Tracker */;
+			targetProxy = 74D8B1832C3C7FA700CD1FC0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		740D5DDB2C1E11D800523879 /* LaunchScreen.storyboard */ = {
@@ -640,6 +716,42 @@
 			};
 			name = Release;
 		};
+		74D8B1862C3C7FA700CD1FC0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YJ677YZM59;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = LightKrite.TrackerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tracker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tracker";
+			};
+			name = Debug;
+		};
+		74D8B1872C3C7FA700CD1FC0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YJ677YZM59;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = LightKrite.TrackerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tracker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tracker";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -657,6 +769,15 @@
 			buildConfigurations = (
 				740D5DE22C1E11D800523879 /* Debug */,
 				740D5DE32C1E11D800523879 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		74D8B1852C3C7FA700CD1FC0 /* Build configuration list for PBXNativeTarget "TrackerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74D8B1862C3C7FA700CD1FC0 /* Debug */,
+				74D8B1872C3C7FA700CD1FC0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
