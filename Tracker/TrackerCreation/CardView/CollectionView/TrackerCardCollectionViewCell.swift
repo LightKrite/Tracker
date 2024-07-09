@@ -21,7 +21,7 @@ final class TrackerCardCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = UIColor(named: "YP White")
+        contentView.backgroundColor = UIColor.ypWhite
         addSubviews()
         configureConstraints()
     }

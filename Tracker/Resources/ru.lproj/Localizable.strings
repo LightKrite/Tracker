@@ -1,19 +1,28 @@
-
-
 // OnboardingViewController
-"mainLabel.text.first" = "Отслеживайте только то, что хотите";
-"mainLabel.text.second" = "Даже если это не литры воды и йога";
+"mainLabel.text.first" = "Отслеживайте только то, что хотите!";
+"mainLabel.text.second" = "Даже если это не литры воды и йога!";
 "actionButton.title" = "Вот это технологии!";
 // TabBarController
 "tabBar.titles.first" = "Трекеры";
 "tabBar.titles.second" = "Статистика";
 // TrackersListViewController
 "emptyTrackersLabel" = "Что будем отслеживать?";
+"emptyTrackersLabel.nothingFound" = "Ничего не найдено";
 "trackersLabel" = "Трекеры";
-"searchBar.placeholder" = "Поиск";
+"searchBar.placeholder" = "Поиск...";
+"pinnedCategoryName" = "Закрепленные";
+"filterButton" = "Фильтры";
+"trackerList.pin" = "Закрепить";
+"trackerList.unpin" = "Открепить";
+"trackerList.edit" = "Редактировать";
+"trackerList.delete" = "Удалить";
 // Statistics
 "emptyStatisticsLabel" = "Анализировать пока нечего";
 "statisticsLabel" = "Статистика";
+"statistics.firstInfoLabel" = "Лучший период";
+"statistics.secondInfoLabel" = "Идеальные дни";
+"statistics.thirdInfoLabel" = "Трекеров завершено";
+"statistics.fourthInfoLabel" = "Среднее значение";
 // TrackerTypeViewController
 "trackerType.title" = "Создание трекера";
 "regularTrackerButton" = "Привычка";
@@ -34,15 +43,22 @@
 // TrackerCategoryViewController
 "trackerCategory.title" = "Категория";
 "trackerCategory.addNewCategoryButton" = "Новая категория";
-"trackerCategory.emptyCategoriesLabel" = "Привычки и события можно\nобъединить по смыслу";
+"trackerCategory.emptyCategoriesLabel" = "Привычки и события можно \n объединить по смыслу";
 // TrackerCategoryNameViewController
 "trackerCategoryName.title" = "Новая категория";
 "trackerCategoryName.textField.placeholder" = "Введите название категории";
-
 "createNewCategoryButton" = "Готово";
 // TrackerScheduleViewController
 "trackerSchedule.title" = "Расписание";
 "acceptScheduleButton" = "Готово";
+// TrackerEdatableCardViewController
+"trackerCard.saveTrackerButton" = "Сохранить";
+// TrackersFiltersViewController
+"trackerFilters.titleLabel" = "Фильтры";
+"trackerFilters.all" = "Все трекеры";
+"trackerFilters.forToday" = "Трекеры на сегодня";
+"trackerFilters.completed" = "Завершенные";
+"trackerFilters.uncompleted" = "Не завершенные";
 
 // enum WeekDay
 "monday" = "Понедельник";

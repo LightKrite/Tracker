@@ -2,8 +2,12 @@ import UIKit
 
 extension UIViewController {
     
-    func toggleAppearance(isDark: Bool) {
-        self.overrideUserInterfaceStyle = isDark ? .light : .dark
+    var isDarkMode: Bool {
+        if #available(iOS 13.0, *) {
+            return self.traitCollection.userInterfaceStyle == .dark
+        } else {
+            return false
+        }
     }
     
     func hideKeyboardWhenTappedAround() {
@@ -16,4 +20,3 @@ extension UIViewController {
         view.endEditing(true)
     }
 }
-

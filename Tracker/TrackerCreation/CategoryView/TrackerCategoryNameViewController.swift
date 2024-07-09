@@ -6,6 +6,8 @@ protocol TrackerCategoryNameViewControllerDelegate: AnyObject {
 
 final class TrackerCategoryNameViewController: UIViewController {
     
+    private let analyticsService = AnalyticsService()
+    
     // MARK: - Properties for CoreData
     private let trackerCategoryStore = TrackerCategoryStore()
     
@@ -34,9 +36,7 @@ final class TrackerCategoryNameViewController: UIViewController {
     private var textField: UITextField = {
         let textField = TextFieldWithPadding()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.backgroundColor = UIColor(named: "YP LightGrey")?.withAlphaComponent(0.3)
-        textField.placeholder = NSLocalizedString("trackerCategoryName.textField.placeholder", comment: "TextField placeholder")
-
+        textField.backgroundColor = UIColor.ypLightGray.withAlphaComponent(0.3)
         textField.clearButtonMode = .whileEditing
         textField.layer.masksToBounds = true
         textField.layer.cornerRadius = 16
@@ -50,8 +50,8 @@ final class TrackerCategoryNameViewController: UIViewController {
             action: #selector(didTapCreateNewCategoryButton)
         )
         button.setTitle( NSLocalizedString("createNewCategoryButton", comment: "Category creation button title"), for: .normal)
-        button.setTitleColor(UIColor(named: "YP White"), for: .normal)
-        button.backgroundColor = UIColor(named: "YP Black")
+        button.setTitleColor(UIColor.ypWhite, for: .normal)
+        button.backgroundColor = UIColor.ypBlack
         button.layer.cornerRadius = 16
         button.layer.masksToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -61,11 +61,9 @@ final class TrackerCategoryNameViewController: UIViewController {
     // MARK: - View controller lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.toggleAppearance(isDark: TabBarController().isDark)
-        view.backgroundColor = UIColor(named: "YP White")
+        view.backgroundColor = UIColor.ypWhite
         titleConfig()
         textFieldConfig()
-        hideKeyboardWhenTappedAround()
         textField.delegate = self
         createNewCategoryButtonConfig()
         createNewCategoryButtonIsActive(newCategoryName.count > 0)
@@ -73,7 +71,14 @@ final class TrackerCategoryNameViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        analyticsService.viewWillAppear(on: AnalyticsScreens.categoryName.rawValue)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        analyticsService.viewWillDisappear(from: AnalyticsScreens.categoryName.rawValue)
+    }
+    
     
     // MARK: - Objective-C functions
     @objc
@@ -109,10 +114,10 @@ extension TrackerCategoryNameViewController: UITextFieldDelegate {
     func createNewCategoryButtonIsActive(_ bool: Bool) {
         if bool {
             createNewCategoryButton.isEnabled = true
-            createNewCategoryButton.backgroundColor = UIColor(named: "YP Black")
+            createNewCategoryButton.backgroundColor = UIColor.ypBlack
         } else {
             createNewCategoryButton.isEnabled = false
-            createNewCategoryButton.backgroundColor = UIColor(named: "YP Grey")
+            createNewCategoryButton.backgroundColor = UIColor.ypGray
         }
     }
 }

@@ -7,6 +7,7 @@ enum TrackerStoreError: Error {
     case decodingErrorInvalidColor
     case decodingErrorInvalidEmoji
     case decodingErrorInvalidSchedule
+    case decodingErrorInvalidPinnedFrom
     case initError
 }
 
@@ -30,6 +31,7 @@ protocol TrackerStoreDelegate: AnyObject {
 
 final class TrackerStore: NSObject {
     
+    private let trackerRecordStore = TrackerRecordStore()
     private let uiColorMarshalling = UIColorMarshalling()
     
     private let context: NSManagedObjectContext
@@ -80,7 +82,7 @@ final class TrackerStore: NSObject {
     }
     
     func tracker(from trackerCoreData: TrackerCoreData) throws -> Tracker {
-        guard let id = trackerCoreData.id else {
+        guard let id = trackerCoreData.trackerID else {
             throw TrackerStoreError.decodingErrorInvalidID
         }
         guard let name = trackerCoreData.name else {
@@ -95,6 +97,9 @@ final class TrackerStore: NSObject {
         guard let scheduleString = trackerCoreData.schedule else {
             throw TrackerStoreError.decodingErrorInvalidSchedule
         }
+        let isPinned = trackerCoreData.isPinned
+        
+        let pinnedFrom = trackerCoreData.pinnedFrom
         
         let schedule = Schedule(days: weekDays(from: scheduleString))
         return Tracker(
@@ -102,8 +107,11 @@ final class TrackerStore: NSObject {
             name: name,
             color: uiColorMarshalling.color(from:color),
             emoji: emoji,
-            schedule: schedule
+            schedule: schedule,
+            isPinned: isPinned,
+            pinnedFrom: pinnedFrom
         )
+        
     }
     
     private func weekDays(from scheduleString: String) -> [WeekDay] {
@@ -123,38 +131,37 @@ final class TrackerStore: NSObject {
         return weekDays
     }
     
-    func addNewTracker(_ tracker: Tracker, selectedCategoryRow: Int?) throws {
+    func addNewTracker(_ tracker: Tracker, selectedCategoryName: String?) throws {
         let trackerCoreData = TrackerCoreData(context: context)
-        updateExistingTracker(trackerCoreData, with: tracker, selectedCategoryRow: selectedCategoryRow)
-        try context.save()
+        updateExistingTracker(trackerCoreData, with: tracker, selectedCategoryName: selectedCategoryName)
+        try tryToSaveContext(from: "addNewTracker")
     }
     
-    private func updateExistingTracker(_ trackerCoreData: TrackerCoreData, with tracker: Tracker, selectedCategoryRow: Int?) {
-        trackerCoreData.id = trackerForCoreData(from: tracker).id
+    private func updateExistingTracker(_ trackerCoreData: TrackerCoreData, with tracker: Tracker, selectedCategoryName: String?) {
+        trackerCoreData.trackerID = trackerForCoreData(from: tracker).id
         trackerCoreData.name = trackerForCoreData(from: tracker).name
         trackerCoreData.color = trackerForCoreData(from: tracker).color
         trackerCoreData.emoji = trackerForCoreData(from: tracker).emoji
         trackerCoreData.schedule = trackerForCoreData(from: tracker).schedule
+        trackerCoreData.isPinned = trackerForCoreData(from: tracker).isPinned
+        trackerCoreData.pinnedFrom = trackerForCoreData(from: tracker).pinnedFrom
         
-        var selected: Int = 0
-        if let selectedCategoryRow = selectedCategoryRow {
-            selected = selectedCategoryRow
+        var selected: String = "Error category"
+        if let selectedCategoryName = selectedCategoryName {
+            selected = selectedCategoryName
         }
-        let category = fetchSelectedCategory(with: context, selectedCategoryRow: selected)
+        let category = fetchSelectedCategory(with: context, selectedCategoryName: selected)
         trackerCoreData.category = category
     }
     
-    private func fetchSelectedCategory(with context: NSManagedObjectContext, selectedCategoryRow: Int) -> TrackerCategoryCoreData? {
+    
+    
+    private func fetchSelectedCategory(with context: NSManagedObjectContext, selectedCategoryName: String) -> TrackerCategoryCoreData? {
         let request = TrackerCategoryCoreData.fetchRequest()
-        request.predicate = NSPredicate(format: "%K == %ld", #keyPath(TrackerCategoryCoreData.categoryId), selectedCategoryRow)
+        request.returnsObjectsAsFaults = false
+        request.predicate = NSPredicate(format: "%K == %@", #keyPath(TrackerCategoryCoreData.name), selectedCategoryName)
         let object = try? context.fetch(request).first
         return object
-    }
-    
-    private func fetchCategory(with context: NSManagedObjectContext) -> TrackerCategoryCoreData? {
-        let request = TrackerCategoryCoreData.fetchRequest()
-        let objects = try? context.fetch(request).first
-        return objects
     }
     
     private func trackerForCoreData(from tracker: Tracker) -> TrackerForCoreData {
@@ -163,12 +170,16 @@ final class TrackerStore: NSObject {
         let color = uiColorMarshalling.hexString(from: tracker.color)
         let emoji = tracker.emoji
         let schedule = scheduleString(from: tracker.schedule)
+        let isPinned = tracker.isPinned
+        let pinnedFrom = tracker.pinnedFrom
         return TrackerForCoreData(
             id: id,
             name: name,
             color: color,
             emoji: emoji,
-            schedule: schedule)
+            schedule: schedule,
+            isPinned: isPinned,
+            pinnedFrom: pinnedFrom)
     }
     
     private func scheduleString(from schedule: Schedule) -> String {
@@ -179,6 +190,81 @@ final class TrackerStore: NSObject {
         }
         return scheduleString.joined(separator: ",")
     }
+    
+    private func fetchCategory(with context: NSManagedObjectContext) -> TrackerCategoryCoreData? {
+        let request = TrackerCategoryCoreData.fetchRequest()
+        let objects = try? context.fetch(request).first
+        return objects
+    }
+    
+    func getSelectedTrackerCategoryName(with trackerID: UUID) -> String {
+        guard let fetchedTracker = fetchSelectedTracker(with: context, trackerID: trackerID) else {
+            return ""
+        }
+        return fetchedTracker.category?.name ?? ""
+    }
+    
+    func deleteSelectedTracker(with trackerID: UUID) throws {
+        guard let object = fetchSelectedTracker(with: context, trackerID: trackerID) else {
+            return
+        }
+        context.delete(object)
+        try tryToSaveContext(from: "deleteSelectedTracker")
+    }
+    
+    func deleteAll() throws {
+        let objects = fetchedResultsController?.fetchedObjects ?? []
+           for object in objects { context.delete(object) }
+        try context.save()
+    }
+    
+    func createMockTracker() -> Tracker {
+        let tracker = Tracker(
+            id: UUID(),
+            name: "Some string",
+            color: UIColor(named: "CC Blue") ?? .black,
+            emoji: "X",
+            schedule: Schedule(days: WeekDay.allCases.filter { $0 != WeekDay.empty}),
+            isPinned: false,
+            pinnedFrom: nil)
+        return tracker
+    }
+    
+    private func fetchSelectedTracker(with context: NSManagedObjectContext, trackerID: UUID) -> TrackerCoreData? {
+        let request = TrackerCoreData.fetchRequest()
+        request.returnsObjectsAsFaults = false
+        request.predicate = NSPredicate(format: "%K == %@", #keyPath(TrackerCoreData.trackerID), trackerID as CVarArg)
+        let object = try? context.fetch(request).first
+        return object
+    }
+    
+    
+    func deleteSelectedTrackerRecords(with trackerID: UUID) throws {
+        guard let objects = fetchSelectedTrackerRecords(with: context, trackerID: trackerID) else {
+            return
+        }
+        for object in objects {
+            context.delete(object)
+        }
+        try tryToSaveContext(from: "deleteSelectedTrackerRecords")
+    }
+    
+    private func fetchSelectedTrackerRecords(with context: NSManagedObjectContext, trackerID: UUID) -> [TrackerRecordCoreData]? {
+        let request = TrackerRecordCoreData.fetchRequest()
+        request.returnsObjectsAsFaults = false
+        request.predicate = NSPredicate(format: "%K == %@", #keyPath(TrackerRecordCoreData.trackerID), trackerID as CVarArg)
+        let objects = try? context.fetch(request)
+        return objects
+    }
+    
+    func tryToSaveContext(from funcName: String) throws {
+        do {
+            try context.save()
+        } catch {
+            return
+        }
+    }
+    
 }
 
 extension TrackerStore: NSFetchedResultsControllerDelegate {
@@ -230,7 +316,3 @@ extension TrackerStore: NSFetchedResultsControllerDelegate {
         }
     }
 }
-
-
-
-

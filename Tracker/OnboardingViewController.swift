@@ -42,10 +42,6 @@ final class OnboardingViewController: UIPageViewController {
         let pageControl = UIPageControl()
         pageControl.numberOfPages = pages.count
         pageControl.currentPage = 0
-        
-        pageControl.currentPageIndicatorTintColor = UIColor(named: "YP Black")
-        pageControl.pageIndicatorTintColor = UIColor(named: "YP Black")?.withAlphaComponent(0.3)
-        
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         return pageControl
     }()
@@ -58,7 +54,6 @@ final class OnboardingViewController: UIPageViewController {
         )
         button.setTitle(NSLocalizedString("actionButton.title", comment: "Action button title"), for: .normal)
         button.setTitleColor(UIColor(named: "YP White"), for: .normal)
-        button.backgroundColor = UIColor(named: "YP Black")
         button.layer.cornerRadius = 16
         button.layer.masksToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -68,7 +63,6 @@ final class OnboardingViewController: UIPageViewController {
     private var mainLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.textColor = UIColor(named: "YP Black")
         label.numberOfLines = 2
         label.font = UIFont.systemFont(ofSize: 32, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -84,10 +78,12 @@ final class OnboardingViewController: UIPageViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private var isDark: Bool = false
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         dataSource = self
         delegate = self
         configConstraints()
@@ -97,6 +93,36 @@ final class OnboardingViewController: UIPageViewController {
         }
         
         switchMainTitleText()
+        
+        setColors()
+        
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        setColors()
+        
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+    
+    private func setColors() {
+        if traitCollection.userInterfaceStyle == .light {
+            actionButton.backgroundColor = UIColor(named: "YP Black")
+            actionButton.setTitleColor(UIColor(named: "YP White"), for: .normal)
+            mainLabel.textColor = UIColor(named: "YP Black")
+            pageControl.currentPageIndicatorTintColor = UIColor(named: "YP Black")
+            pageControl.pageIndicatorTintColor = UIColor(named: "YP Black")?.withAlphaComponent(0.3)
+        } else {
+            actionButton.backgroundColor = UIColor(named: "YP White")
+            actionButton.setTitleColor(UIColor(named: "YP Black"), for: .normal)
+            mainLabel.textColor = UIColor(named: "YP White")
+            pageControl.currentPageIndicatorTintColor = UIColor(named: "YP White")
+            pageControl.pageIndicatorTintColor = UIColor(named: "YP White")?.withAlphaComponent(0.3)
+            
+        }
     }
     
     private func switchMainTitleText() {

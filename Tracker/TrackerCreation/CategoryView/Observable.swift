@@ -5,12 +5,12 @@ final class Observable<Value> {
     private var onChange: ((Value) -> Void)? = nil
 
     var wrappedValue: Value {
-        didSet { // вызываем функцию после изменения обёрнутого значения
+        didSet {
             onChange?(wrappedValue)
         }
     }
 
-    var projectedValue: Observable<Value> { // возвращает экземпляр самого проперти враппера
+    var projectedValue: Observable<Value> {
         return self
     }
     
@@ -18,7 +18,7 @@ final class Observable<Value> {
         self.wrappedValue = wrappedValue
     }
 
-    func bind(action: @escaping (Value) -> Void) { // функция для добавления функции для вызова на изменение
+    func bind(action: @escaping (Value) -> Void) { 
         self.onChange = action
     }
 }

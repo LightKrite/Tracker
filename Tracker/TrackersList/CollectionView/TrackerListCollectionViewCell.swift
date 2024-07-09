@@ -9,7 +9,7 @@ final class TrackersListCollectionViewCell: UICollectionViewCell {
     
     weak var delegate: TrackersListCollectionViewCellDelegate?
     
-    private let cellBackgroundSquare: UIView = {
+    let cellBackgroundSquare: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 16
         view.layer.masksToBounds = true
@@ -23,6 +23,15 @@ final class TrackersListCollectionViewCell: UICollectionViewCell {
         view.layer.masksToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    
+    private let cellPinnedImageView: UIImageView = {
+        let image = UIImage(named: "Pinned")
+        let imageView = UIImageView(image: image)
+        imageView.image = imageView.image?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = UIColor.ypWhite
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
     }()
     
     private let cellEmojiLabel: UILabel = {
@@ -39,7 +48,7 @@ final class TrackersListCollectionViewCell: UICollectionViewCell {
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 2
         label.addInterlineSpacing(spacingValue: 6)
-        label.textColor = UIColor(named: "YP White")
+        label.textColor = UIColor.ypWhite
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -55,8 +64,7 @@ final class TrackersListCollectionViewCell: UICollectionViewCell {
         button.layer.cornerRadius = 21
         button.layer.masksToBounds = true
         button.layer.borderWidth = 4
-        button.layer.borderColor = UIColor(named: "YP White")?.cgColor
-        button.tintColor = UIColor(named: "YP White")
+        button.tintColor = UIColor.ypWhite
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -77,8 +85,8 @@ final class TrackersListCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = UIColor(named: "YP White")
-        cellBackgroundRound.backgroundColor = UIColor(named: "YP White")
+        contentView.backgroundColor = UIColor.ypWhite
+        cellBackgroundRound.backgroundColor = UIColor.ypWhite
         cellBackgroundRound.alpha = 0.3
         addSubviews()
         configureConstraints()
@@ -92,7 +100,9 @@ final class TrackersListCollectionViewCell: UICollectionViewCell {
         with tracker: Tracker,
         isCompletedToday: Bool,
         completedDays: Int,
-        indexPath: IndexPath
+        indexPath: IndexPath,
+        isPinned: Bool,
+        isDark: Bool
     ) {
         self.trackerId = tracker.id
         self.isCompletedToday = isCompletedToday
@@ -103,6 +113,8 @@ final class TrackersListCollectionViewCell: UICollectionViewCell {
         cellBackgroundSquare.backgroundColor = tracker.color
         cellPlusButton.backgroundColor = tracker.color
         cellPlusButton.alpha = isCompletedToday ? 0.7 : 1
+        cellPlusButton.layer.borderColor = UIColor.ypWhite.cgColor
+        cellPinnedImageView.alpha = isPinned ? 1 : 0
         
         let daysString = String.localizedStringWithFormat(
             NSLocalizedString("numberOfDays", comment: "Number of completed days"),
@@ -143,16 +155,13 @@ final class TrackersListCollectionViewCell: UICollectionViewCell {
     
     
     // MARK: - Configure Constraints
-    func addSubviews() {
+    private func addSubviews() {
         addSubview(cellBackgroundSquare)
-        addSubview(cellBackgroundRound)
-        addSubview(cellEmojiLabel)
-        addSubview(cellTrackerLabel)
         addSubview(cellPlusButton)
         addSubview(cellDaysCounterLabel)
     }
     
-    func configureConstraints() {
+    private func configureConstraints() {
         
         NSLayoutConstraint.activate([
             cellBackgroundSquare.widthAnchor.constraint(equalToConstant: contentView.frame.width),
@@ -160,23 +169,53 @@ final class TrackersListCollectionViewCell: UICollectionViewCell {
             cellBackgroundSquare.topAnchor.constraint(equalTo: contentView.topAnchor),
             cellBackgroundSquare.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             cellBackgroundSquare.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            
-            cellBackgroundRound.widthAnchor.constraint(equalToConstant: 24),
-            cellBackgroundRound.heightAnchor.constraint(equalToConstant: 24),
-            cellBackgroundRound.topAnchor.constraint(equalTo: cellBackgroundSquare.topAnchor, constant: 12),
-            cellBackgroundRound.leadingAnchor.constraint(equalTo: cellBackgroundSquare.leadingAnchor, constant: 12),
+        ])
+        
+        configureInsideElements(
+            backgroundView: cellBackgroundSquare,
+            roundView: cellBackgroundRound,
+            emojiLabel: cellEmojiLabel,
+            trackerLabel: cellTrackerLabel,
+            pinnedImageViw: cellPinnedImageView
+        )
+        
+        configureOutsideElements(backgroundView: cellBackgroundSquare)
+        
+    }
+    
+    func configureInsideElements(backgroundView: UIView, roundView: UIView, emojiLabel: UILabel, trackerLabel: UILabel, pinnedImageViw: UIImageView) {
+        
+        backgroundView.addSubview(roundView)
+        backgroundView.addSubview(emojiLabel)
+        backgroundView.addSubview(trackerLabel)
+        backgroundView.addSubview(pinnedImageViw)
+        
+        NSLayoutConstraint.activate([
+            roundView.widthAnchor.constraint(equalToConstant: 24),
+            roundView.heightAnchor.constraint(equalToConstant: 24),
+            roundView.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 12),
+            roundView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 12),
 
-            cellEmojiLabel.widthAnchor.constraint(equalToConstant: 16),
-            cellEmojiLabel.leadingAnchor.constraint(equalTo: cellBackgroundRound.centerXAnchor, constant: -8),
-            cellEmojiLabel.heightAnchor.constraint(equalToConstant: 22),
-            cellEmojiLabel.topAnchor.constraint(equalTo: cellBackgroundRound.centerYAnchor, constant: -11),
+            emojiLabel.widthAnchor.constraint(equalToConstant: 16),
+            emojiLabel.leadingAnchor.constraint(equalTo: roundView.centerXAnchor, constant: -8),
+            emojiLabel.heightAnchor.constraint(equalToConstant: 22),
+            emojiLabel.topAnchor.constraint(equalTo: roundView.centerYAnchor, constant: -11),
             
-            cellTrackerLabel.leadingAnchor.constraint(equalTo: cellBackgroundSquare.leadingAnchor, constant: 12),
-            cellTrackerLabel.trailingAnchor.constraint(equalTo: cellBackgroundSquare.trailingAnchor, constant: -12),
-            cellTrackerLabel.topAnchor.constraint(equalTo: cellBackgroundRound.bottomAnchor, constant: 8),
+            trackerLabel.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 12),
+            trackerLabel.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -12),
+            trackerLabel.topAnchor.constraint(equalTo: roundView.bottomAnchor, constant: 8),
             
-            cellPlusButton.topAnchor.constraint(equalTo: cellBackgroundSquare.bottomAnchor, constant: 4),
-            cellPlusButton.trailingAnchor.constraint(equalTo: cellBackgroundSquare.trailingAnchor, constant: -8),
+            pinnedImageViw.widthAnchor.constraint(equalToConstant: 24),
+            pinnedImageViw.heightAnchor.constraint(equalToConstant: 24),
+            pinnedImageViw.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 12),
+            pinnedImageViw.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -4)
+        ])
+    }
+    
+    private func configureOutsideElements(backgroundView: UIView) {
+        NSLayoutConstraint.activate([
+            cellPlusButton.topAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: 4),
+            cellPlusButton.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -8),
             cellPlusButton.widthAnchor.constraint(equalToConstant: 42),
             cellPlusButton.heightAnchor.constraint(equalToConstant: 42),
             
@@ -184,4 +223,6 @@ final class TrackersListCollectionViewCell: UICollectionViewCell {
             cellDaysCounterLabel.centerYAnchor.constraint(equalTo: cellPlusButton.centerYAnchor)
         ])
     }
+    
+    
 }

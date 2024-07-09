@@ -1,6 +1,5 @@
 import UIKit
 import CoreData
-import YandexMobileMetrica
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -8,11 +7,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        guard let configuration = YMMYandexMetricaConfiguration(apiKey: "739da9f6-53eb-4cd0-9bfc-c07271adddb2") else { // используйте ваш ключ
-            return true
-        }
-            
-        YMMYandexMetrica.activate(with: configuration)
+        AnalyticsService.activate()
         DaysValueTransformer.register()
         UIColorValueTransformer.register()
         return true
@@ -28,6 +23,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         configuration.storyboard = nil
         configuration.sceneClass = UIWindowScene.self
         configuration.delegateClass = SceneDelegate.self
+        
         return configuration
     }
     
@@ -55,7 +51,4 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 }
-
-
-
 
