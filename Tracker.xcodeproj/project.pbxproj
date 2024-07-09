@@ -43,6 +43,9 @@
 		7479AD2A2C30517E0044773C /* ScheduleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7479AD292C30517E0044773C /* ScheduleTableViewCell.swift */; };
 		7479AD2C2C3051DA0044773C /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7479AD2B2C3051DA0044773C /* CategoryTableViewCell.swift */; };
 		7479AD2E2C3053C00044773C /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7479AD2D2C3053C00044773C /* UIViewController.swift */; };
+		747C1B062C3DB34A009051AE /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74D8B18D2C3C8F0200CD1FC0 /* XCTest.framework */; platformFilter = ios; };
+		747C1B082C3DB351009051AE /* InlineSnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 747C1B072C3DB351009051AE /* InlineSnapshotTesting */; };
+		747C1B0A2C3DB356009051AE /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 747C1B092C3DB356009051AE /* SnapshotTesting */; };
 		74A6B1A62C32B9BA003F3130 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 74A6B1A42C32B9BA003F3130 /* DataModel.xcdatamodeld */; };
 		74A6B1A82C34391F003F3130 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A6B1A72C34391F003F3130 /* OnboardingViewController.swift */; };
 		74A6B1AA2C343983003F3130 /* TrackerCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A6B1A92C343983003F3130 /* TrackerCategoryViewModel.swift */; };
@@ -52,9 +55,6 @@
 		74A6B1D92C346D0E003F3130 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 74A6B1DB2C346D0E003F3130 /* Localizable.stringsdict */; };
 		74A6B1E02C346D33003F3130 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 74A6B1E22C346D33003F3130 /* InfoPlist.strings */; };
 		74D8B1822C3C7FA700CD1FC0 /* TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D8B1812C3C7FA700CD1FC0 /* TrackerTests.swift */; };
-		74D8B18A2C3C805200CD1FC0 /* InlineSnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 74D8B1892C3C805200CD1FC0 /* InlineSnapshotTesting */; };
-		74D8B18C2C3C805200CD1FC0 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 74D8B18B2C3C805200CD1FC0 /* SnapshotTesting */; };
-		74D8B18E2C3C8F0200CD1FC0 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74D8B18D2C3C8F0200CD1FC0 /* XCTest.framework */; };
 		74D8B1912C3D8D3E00CD1FC0 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D8B1902C3D8D3E00CD1FC0 /* Analytics.swift */; };
 		74D8B1932C3D901E00CD1FC0 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D8B1922C3D901E00CD1FC0 /* UIColor.swift */; };
 		74D8B1952C3D903600CD1FC0 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D8B1942C3D903600CD1FC0 /* UIView.swift */; };
@@ -150,9 +150,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74D8B18E2C3C8F0200CD1FC0 /* XCTest.framework in Frameworks */,
-				74D8B18A2C3C805200CD1FC0 /* InlineSnapshotTesting in Frameworks */,
-				74D8B18C2C3C805200CD1FC0 /* SnapshotTesting in Frameworks */,
 				E963187B4D4B1F3203D49332 /* Pods_Tracker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -161,6 +158,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				747C1B062C3DB34A009051AE /* XCTest.framework in Frameworks */,
+				747C1B0A2C3DB356009051AE /* SnapshotTesting in Frameworks */,
+				747C1B082C3DB351009051AE /* InlineSnapshotTesting in Frameworks */,
 				639C24029CBB1756AB3E52E7 /* Pods_TrackerTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -422,8 +422,6 @@
 			);
 			name = Tracker;
 			packageProductDependencies = (
-				74D8B1892C3C805200CD1FC0 /* InlineSnapshotTesting */,
-				74D8B18B2C3C805200CD1FC0 /* SnapshotTesting */,
 			);
 			productName = Tracker;
 			productReference = 740D5DCD2C1E11D500523879 /* Tracker.app */;
@@ -444,6 +442,10 @@
 				74D8B1842C3C7FA700CD1FC0 /* PBXTargetDependency */,
 			);
 			name = TrackerTests;
+			packageProductDependencies = (
+				747C1B072C3DB351009051AE /* InlineSnapshotTesting */,
+				747C1B092C3DB356009051AE /* SnapshotTesting */,
+			);
 			productName = TrackerTests;
 			productReference = 74D8B17F2C3C7FA700CD1FC0 /* TrackerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -950,12 +952,12 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		74D8B1892C3C805200CD1FC0 /* InlineSnapshotTesting */ = {
+		747C1B072C3DB351009051AE /* InlineSnapshotTesting */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 74D8B1882C3C805200CD1FC0 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
 			productName = InlineSnapshotTesting;
 		};
-		74D8B18B2C3C805200CD1FC0 /* SnapshotTesting */ = {
+		747C1B092C3DB356009051AE /* SnapshotTesting */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 74D8B1882C3C805200CD1FC0 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
 			productName = SnapshotTesting;

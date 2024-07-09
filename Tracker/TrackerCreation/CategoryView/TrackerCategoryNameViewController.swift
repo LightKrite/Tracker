@@ -37,6 +37,7 @@ final class TrackerCategoryNameViewController: UIViewController {
         let textField = TextFieldWithPadding()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = UIColor.ypLightGray.withAlphaComponent(0.3)
+        textField.placeholder = NSLocalizedString("trackerCategoryName.textField.placeholder", comment: "TextField placeholder")
         textField.clearButtonMode = .whileEditing
         textField.layer.masksToBounds = true
         textField.layer.cornerRadius = 16
@@ -67,6 +68,7 @@ final class TrackerCategoryNameViewController: UIViewController {
         textField.delegate = self
         createNewCategoryButtonConfig()
         createNewCategoryButtonIsActive(newCategoryName.count > 0)
+        hideKeyboardWhenTappedAround()
     }
     
     override func viewWillAppear(_ animated: Bool) {

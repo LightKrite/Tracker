@@ -82,6 +82,7 @@ final class TrackerCategoryViewController: UIViewController {
         var label = UILabel()
         label.text = NSLocalizedString("trackerCategory.emptyCategoriesLabel", comment: "Info text if categories is empty")
         label.font = UIFont.systemFont(ofSize: 12)
+        label.numberOfLines = 2
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -104,6 +105,7 @@ final class TrackerCategoryViewController: UIViewController {
         view.backgroundColor = UIColor.ypWhite
         titleConfig()
         addNewCategoryButtonConfig()
+        hideKeyboardWhenTappedAround()
         viewModel = TrackerCategoryViewModel()
         categoriesNames = getCategoriesNamesFromStore()
         

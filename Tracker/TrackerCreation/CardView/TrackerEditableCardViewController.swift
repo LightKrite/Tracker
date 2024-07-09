@@ -251,6 +251,7 @@ final class TrackerEditableCardViewController: UIViewController {
         horizontalStackViewConfig()
         scrollViewConfig()
         textFieldConfig()
+        hideKeyboardWhenTappedAround()
         textField.delegate = self
         collectionView.delegate = self
         

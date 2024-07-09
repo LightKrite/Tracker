@@ -71,6 +71,7 @@ final class TrackerScheduleViewController: UIViewController {
         titleConfig()
         acceptScheduleButtonConfig()
         tableViewConfig()
+        hideKeyboardWhenTappedAround()
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -9,7 +9,7 @@
 "emptyTrackersLabel" = "ما الذي سنشاهده؟";
 "emptyTrackersLabel.nothingFound" = "لم يتم العثور على شيء";
 "trackersLabel" = "أجهزة التتبع";
-"searchBar.placeholder" = "بحث...";
+"searchBar.placeholder" = "بحث";
 "pinnedCategoryName" = "مثبت";
 "filterButton" = "المرشحات";
 "trackerList.pin" = "دبوس";

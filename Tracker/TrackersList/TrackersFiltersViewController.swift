@@ -69,6 +69,7 @@ final class TrackersFiltersViewController: UIViewController {
         titleConfig()
         computeTableViewStyle()
         tableViewConfig()
+        hideKeyboardWhenTappedAround()
     }
     
     override func viewWillAppear(_ animated: Bool) {

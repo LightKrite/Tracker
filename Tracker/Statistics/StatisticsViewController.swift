@@ -66,6 +66,7 @@ final class StatisticsViewController: UIViewController {
         super.viewDidLoad()
         UserDefaults.standard.set(String(describing: type(of: self)), forKey: "LastViewController")
         self.accessibilityLabel = "StatisticsViewController"
+        hideKeyboardWhenTappedAround()
         // NavBar
         view.addSubview(navBar)
         

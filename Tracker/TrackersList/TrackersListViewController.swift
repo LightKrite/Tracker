@@ -139,6 +139,7 @@ final class TrackersListViewController: UIViewController {
         
         addTopBar()
         collectionViewConfig()
+        hideKeyboardWhenTappedAround()
         
         viewModel = TrackersListViewModel()
         guard let viewModel = viewModel else { return }

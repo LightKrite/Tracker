@@ -70,6 +70,7 @@ final class TrackerTypeViewController: UIViewController {
         view.backgroundColor = UIColor.ypWhite
         titleConfig()
         stackViewConfig()
+        hideKeyboardWhenTappedAround()
     }
     
     override func viewWillAppear(_ animated: Bool) {

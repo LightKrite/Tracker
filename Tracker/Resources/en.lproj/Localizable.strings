@@ -9,7 +9,7 @@
 "emptyTrackersLabel" = "What we will watch?";
 "emptyTrackersLabel.nothingFound" = "Nothing found";
 "trackersLabel" = "Trackers";
-"searchBar.placeholder" = "Search...";
+"searchBar.placeholder" = "Search";
 "pinnedCategoryName" = "Pinned";
 "filterButton" = "Filters";
 "trackerList.pin" = "Pin";

@@ -9,7 +9,7 @@
 "emptyTrackersLabel" = "Что будем отслеживать?";
 "emptyTrackersLabel.nothingFound" = "Ничего не найдено";
 "trackersLabel" = "Трекеры";
-"searchBar.placeholder" = "Поиск...";
+"searchBar.placeholder" = "Поиск";
 "pinnedCategoryName" = "Закрепленные";
 "filterButton" = "Фильтры";
 "trackerList.pin" = "Закрепить";
