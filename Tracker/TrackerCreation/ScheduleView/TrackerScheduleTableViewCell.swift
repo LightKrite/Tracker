@@ -21,9 +21,9 @@ final class TrackerScheduleTableViewCell: UITableViewCell {
     private var scheduleSwitch: UISwitch = {
         let sswitch = UISwitch()
         sswitch.setOn(false, animated: false)
-        sswitch.tintColor = UIColor.ypGray
+        sswitch.tintColor = UIColor.ypLightGray
         sswitch.onTintColor = UIColor.ypBlue
-        sswitch.thumbTintColor = UIColor.ypWhite
+        sswitch.thumbTintColor = UIColor.white
         sswitch.translatesAutoresizingMaskIntoConstraints = false
         return sswitch
     }()
@@ -40,7 +40,7 @@ final class TrackerScheduleTableViewCell: UITableViewCell {
     private var scheduleFooterView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.ypGray
+        view.backgroundColor = UIColor.ypLightGray
         return view
     }()
     
