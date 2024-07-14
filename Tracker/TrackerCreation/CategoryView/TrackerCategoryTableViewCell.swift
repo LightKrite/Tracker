@@ -9,14 +9,14 @@ final class TrackerCategoryTableViewCell: UITableViewCell {
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 16
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor(named: "YP LightGrey")?.withAlphaComponent(0.3)
+        view.backgroundColor = UIColor.ypLightGray.withAlphaComponent(0.3)
         return view
     }()
     
     private var categoryLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        label.textColor = UIColor(named: "YP Black")
+        label.textColor = UIColor.ypBlack
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -24,7 +24,7 @@ final class TrackerCategoryTableViewCell: UITableViewCell {
     private var categoryFooterView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor(named: "YP Grey")
+        view.backgroundColor = UIColor.ypGray
         return view
     }()
     
@@ -39,7 +39,7 @@ final class TrackerCategoryTableViewCell: UITableViewCell {
     // MARK: - override init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = UIColor(named: "YP White")
+        backgroundColor = UIColor.ypWhite
         addSubviews()
         configureConstraints()
     }

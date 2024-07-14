@@ -14,16 +14,16 @@ final class TrackerScheduleTableViewCell: UITableViewCell {
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 16
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor(named: "YP LightGrey")?.withAlphaComponent(0.3)
+        view.backgroundColor = UIColor.ypLightGray.withAlphaComponent(0.3)
         return view
     }()
     
     private var scheduleSwitch: UISwitch = {
         let sswitch = UISwitch()
         sswitch.setOn(false, animated: false)
-        sswitch.tintColor = UIColor(named: "YP Grey")
-        sswitch.onTintColor = UIColor(named: "YP Blue")
-        sswitch.thumbTintColor = UIColor(named: "YP Whtite")
+        sswitch.tintColor = UIColor.ypLightGray
+        sswitch.onTintColor = UIColor.ypBlue
+        sswitch.thumbTintColor = UIColor.white
         sswitch.translatesAutoresizingMaskIntoConstraints = false
         return sswitch
     }()
@@ -31,7 +31,7 @@ final class TrackerScheduleTableViewCell: UITableViewCell {
     private var scheduleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        label.textColor = UIColor(named: "YP Black")
+        label.textColor = UIColor.ypBlack
         label.text = "Monday"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -40,14 +40,14 @@ final class TrackerScheduleTableViewCell: UITableViewCell {
     private var scheduleFooterView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor(named: "YP Grey")
+        view.backgroundColor = UIColor.ypLightGray
         return view
     }()
     
     // MARK: - override init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = UIColor(named: "YP White")
+        backgroundColor = UIColor.ypWhite
         addSubviews()
         configureConstraints()
         scheduleSwitch.addTarget(self, action: #selector(switchChanged(sender: )), for: UIControl.Event.valueChanged)

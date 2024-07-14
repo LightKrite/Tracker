@@ -77,6 +77,17 @@ final class TrackerCategoryStore: NSObject {
         try? controller.performFetch()
     }
     
+    func deleteAll() throws {
+        let objects = fetchedResultsController?.fetchedObjects ?? []
+           for object in objects { context.delete(object) }
+        try context.save()
+    }
+    
+    func createMockCategory() -> TrackerCategory {
+        let category = TrackerCategory(name: "New mock category", trackers: [])
+        return category
+    }
+    
     private func category(from trackerCategoryCoreData: TrackerCategoryCoreData) throws -> TrackerCategory {
         guard let name = trackerCategoryCoreData.name else {
             throw TrackerCategoryStoreError.decodingErrorInvalidName
@@ -103,7 +114,7 @@ final class TrackerCategoryStore: NSObject {
     func addNewTrackerCategory(_ trackerCategory: TrackerCategory) throws {
         let trackerCategoryCoreData = TrackerCategoryCoreData(context: context)
         updateExistingTrackerCategories(trackerCategoryCoreData, with: trackerCategory)
-        try context.save()
+        try tryToSaveContext()
     }
 
     private func updateExistingTrackerCategories(_ trackerCategoryCoreData: TrackerCategoryCoreData, with trackerCategory: TrackerCategory) {
@@ -115,13 +126,21 @@ final class TrackerCategoryStore: NSObject {
         trackerCategoryCoreData.categoryId = Int32(categories.count)
     }
     
-    func getSortedCategories() -> [TrackerCategory]{
+    func getSortedCategories() -> [TrackerCategory] {
         guard let objects = fetchAllCategories(with: context)
         else { return [] }
         let sortedObjects = objects.sorted(by: { $0.categoryId < $1.categoryId } )
         guard let categories = try? sortedObjects.map({ try self.category(from: $0) })
         else { return [] }
         return categories
+    }
+    
+    func getCategoryRow(for categoryName: String) -> Int? {
+        let categories = getSortedCategories()
+        let row = categories.firstIndex(where: { category in
+            category.name == categoryName
+        })
+        return row
     }
     
     private func fetchAllCategories(with context: NSManagedObjectContext) -> [TrackerCategoryCoreData]? {
@@ -132,14 +151,12 @@ final class TrackerCategoryStore: NSObject {
         return objects
     }
     
-    func deleteAll() throws {
-        guard let objects = fetchAllCategories(with: context) else {
+    func tryToSaveContext() throws {
+        do {
+            try context.save()
+        } catch {
             return
         }
-        for object in objects {
-            context.delete(object)
-        }
-        try context.save()
     }
 }
 

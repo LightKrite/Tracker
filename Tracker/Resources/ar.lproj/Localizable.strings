@@ -1,18 +1,28 @@
-
 // OnboardingViewController
-"mainLabel.text.first" = "تتبع ما تريده فقط";
-"mainLabel.text.second" = "حتى لو لم يكن هناك لتر من الماء أو اليوغا";
+"mainLabel.text.first" = "تتبع ما تريده فقط!";
+"mainLabel.text.second" = "حتى لو لم يكن هناك لتر من الماء أو اليوغا!";
 "actionButton.title" = "رائع، تقنيات مذهلة!";
 // TabBarController
 "tabBar.titles.first" = "أجهزة التتبع";
 "tabBar.titles.second" = "الإحصائيات";
 // TrackersListViewController
 "emptyTrackersLabel" = "ما الذي سنشاهده؟";
+"emptyTrackersLabel.nothingFound" = "لم يتم العثور على شيء";
 "trackersLabel" = "أجهزة التتبع";
 "searchBar.placeholder" = "بحث";
+"pinnedCategoryName" = "مثبت";
+"filterButton" = "المرشحات";
+"trackerList.pin" = "دبوس";
+"trackerList.unpin" = "إزالة التثبيت";
+"trackerList.edit" = "يحرر";
+"trackerList.delete" = "يمسح";
 // إحصائيات
 "emptyStatisticsLabel" = "لا يوجد شيء لتحليله";
 "statisticsLabel" = "إحصائيات";
+"statistics.firstInfoLabel" = "أفضل فترة";
+"statistics.secondInfoLabel" = "أيام مثالية";
+"statistics.thirdInfoLabel" = "تم الانتهاء من أجهزة التتبع";
+"statistics.fourthInfoLabel" = "متوسط ​​القيمة";
 // TrackerTypeViewController
 "trackerType.title" = "إنشاء المتعقب";
 "regularTrackerButton" = "منتظم";
@@ -41,6 +51,14 @@
 // TrackerScheduleViewController
 "trackerSchedule.title" = "الجدول الزمني";
 "acceptScheduleButton" = "موافق";
+// TrackerEdatableCardViewController
+"trackerCard.saveTrackerButton" = "يحفظ";
+// TrackersFiltersViewController
+"trackerFilters.titleLabel" = "المرشحات";
+"trackerFilters.all" = "جميع المتتبعات";
+"trackerFilters.forToday" = "متتبعات اليوم";
+"trackerFilters.completed" = "مكتمل";
+"trackerFilters.uncompleted" = "غير مكتمل";
 
 // enum WeekDay
 "monday" = "الاثنين";

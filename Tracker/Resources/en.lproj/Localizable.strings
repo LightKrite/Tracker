@@ -1,19 +1,28 @@
-
-
 // OnboardingViewController
-"mainLabel.text.first" = "Track only what you want";
-"mainLabel.text.second" = "Even if it`s not liters of water and yoga";
+"mainLabel.text.first" = "Track only what you want!";
+"mainLabel.text.second" = "Even if it`s not liters of water and yoga!";
 "actionButton.title" = "Wow, amazing technologies!";
 // TabBarController
 "tabBar.titles.first" = "Trackers";
 "tabBar.titles.second" = "Statistics";
 // TrackersListViewController
 "emptyTrackersLabel" = "What we will watch?";
+"emptyTrackersLabel.nothingFound" = "Nothing found";
 "trackersLabel" = "Trackers";
 "searchBar.placeholder" = "Search";
+"pinnedCategoryName" = "Pinned";
+"filterButton" = "Filters";
+"trackerList.pin" = "Pin";
+"trackerList.unpin" = "Unpin";
+"trackerList.edit" = "Edit";
+"trackerList.delete" = "Delete";
 // Statistics
 "emptyStatisticsLabel" = "Nothing to analize";
 "statisticsLabel" = "Statistics";
+"statistics.firstInfoLabel" = "Best period";
+"statistics.secondInfoLabel" = "Ideal days";
+"statistics.thirdInfoLabel" = "Trackers completed";
+"statistics.fourthInfoLabel" = "Average value";
 // TrackerTypeViewController
 "trackerType.title" = "Creation of tracker";
 "regularTrackerButton" = "Regular";
@@ -42,6 +51,14 @@
 // TrackerScheduleViewController
 "trackerSchedule.title" = "Schedule";
 "acceptScheduleButton" = "OK";
+// TrackerEdatableCardViewController
+"trackerCard.saveTrackerButton" = "Save";
+// TrackersFiltersViewController
+"trackerFilters.titleLabel" = "Filters";
+"trackerFilters.all" = "All trackers";
+"trackerFilters.forToday" = "Trackers for today";
+"trackerFilters.completed" = "Completed";
+"trackerFilters.uncompleted" = "Uncompleted";
 
 // enum WeekDay
 "monday" = "Monday";

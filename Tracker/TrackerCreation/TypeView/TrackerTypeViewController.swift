@@ -5,6 +5,8 @@ import UIKit
 // MARK: - TrackerTypeViewController
 final class TrackerTypeViewController: UIViewController {
     
+    private let analyticsService = AnalyticsService()
+    
     weak var delegate: TrackerCardViewControllerDelegate?
     
     // MARK: - Mutable properties
@@ -30,8 +32,8 @@ final class TrackerTypeViewController: UIViewController {
             action: #selector(didTapRegularTrackerButton)
         )
         button.setTitle(NSLocalizedString("regularTrackerButton", comment: "Regular button title"), for: .normal)
-        button.setTitleColor(UIColor(named: "YP White"), for: .normal)
-        button.backgroundColor = UIColor(named: "YP Black")
+        button.setTitleColor(UIColor.ypWhite, for: .normal)
+        button.backgroundColor = UIColor.ypBlack
         button.layer.cornerRadius = 16
         button.layer.masksToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -45,8 +47,8 @@ final class TrackerTypeViewController: UIViewController {
             action: #selector(didTapUnregularTrackerButton)
         )
         button.setTitle(NSLocalizedString("unregularTrackerButton", comment: "Unregular button title"), for: .normal)
-        button.setTitleColor(UIColor(named: "YP White"), for: .normal)
-        button.backgroundColor = UIColor(named: "YP Black")
+        button.setTitleColor(UIColor.ypWhite, for: .normal)
+        button.backgroundColor = UIColor.ypBlack
         button.layer.cornerRadius = 16
         button.layer.masksToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -65,16 +67,23 @@ final class TrackerTypeViewController: UIViewController {
     // MARK: - View controller lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.toggleAppearance(isDark: TabBarController().isDark)
-        view.backgroundColor = UIColor(named: "YP White")
+        view.backgroundColor = UIColor.ypWhite
         titleConfig()
         stackViewConfig()
         hideKeyboardWhenTappedAround()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        analyticsService.viewWillAppear(on: AnalyticsScreens.type.rawValue)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        analyticsService.viewWillDisappear(from: AnalyticsScreens.type.rawValue)
+    }
+    
     // MARK: - Objective-C functions
-    
-    
     @objc
     func didTapRegularTrackerButton() {
         regularOrUnregularTrackersChoosen(type: true)

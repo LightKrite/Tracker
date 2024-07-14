@@ -1,10 +1,12 @@
 import UIKit
 
 protocol TrackerCategoryViewControllerDelegate: AnyObject {
-    func sendSelectedCategoryNameToTrackerCard(arrayWithCategoriesNames: [String], selectedCategoryRow: Int)
+    func sendSelectedCategoryNameToTrackerCard(arrayWithCategoriesNames: [String], selectedCategoryRow: Int, selectedName: String)
 }
 
 final class TrackerCategoryViewController: UIViewController {
+    
+    private let analyticsService = AnalyticsService()
     
     // MARK: - MVVM property:
     private var viewModel: TrackerCategoryViewModel?
@@ -35,7 +37,7 @@ final class TrackerCategoryViewController: UIViewController {
         table.isScrollEnabled = true
         table.allowsSelection = true
         
-        table.separatorColor = UIColor(named: "YP LightGrey")?.withAlphaComponent(0.3)
+        table.separatorColor = UIColor.ypLightGray.withAlphaComponent(0.3)
         table.separatorInset = UIEdgeInsets(top: 0, left: 32, bottom: 0, right: 32)
         return table
     }()
@@ -47,8 +49,8 @@ final class TrackerCategoryViewController: UIViewController {
             action: #selector(didTapAddNewCategoryButton)
         )
         button.setTitle(NSLocalizedString("trackerCategory.addNewCategoryButton", comment: "Add new category"), for: .normal)
-        button.setTitleColor(UIColor(named: "YP White"), for: .normal)
-        button.backgroundColor = UIColor(named: "YP Black")
+        button.setTitleColor(UIColor.ypWhite, for: .normal)
+        button.backgroundColor = UIColor.ypBlack
         button.layer.cornerRadius = 16
         button.layer.masksToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -66,7 +68,7 @@ final class TrackerCategoryViewController: UIViewController {
     // MARK: - Properties for Empty Categories Page
     private let emptyCategoriesBackground: UIView = {
         var view = UIView()
-        view.backgroundColor = UIColor(named: "YP White")
+        view.backgroundColor = UIColor.ypWhite
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -80,8 +82,8 @@ final class TrackerCategoryViewController: UIViewController {
         var label = UILabel()
         label.text = NSLocalizedString("trackerCategory.emptyCategoriesLabel", comment: "Info text if categories is empty")
         label.font = UIFont.systemFont(ofSize: 12)
-        label.textAlignment = .center
         label.numberOfLines = 2
+        label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -100,8 +102,7 @@ final class TrackerCategoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.toggleAppearance(isDark: TabBarController().isDark)
-        view.backgroundColor = UIColor(named: "YP White")
+        view.backgroundColor = UIColor.ypWhite
         titleConfig()
         addNewCategoryButtonConfig()
         hideKeyboardWhenTappedAround()
@@ -120,7 +121,7 @@ final class TrackerCategoryViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        analyticsService.viewWillAppear(on: AnalyticsScreens.category.rawValue)
         guard let viewModel = viewModel else { return }
         if viewModel.categories.isEmpty {
             showEmptyCategoriesInfo()
@@ -129,12 +130,19 @@ final class TrackerCategoryViewController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        analyticsService.viewWillDisappear(from: AnalyticsScreens.category.rawValue)
+    }
+    
     private func getCategoriesNamesFromStore() -> [String] {
         guard let viewModel = viewModel else { return [] }
         let categoriesFromStore = viewModel.getSortedCategories()
         var categoriesNamesFromStore: [String] = []
         categoriesFromStore.forEach { categoriesFromStore in
-            categoriesNamesFromStore.append(categoriesFromStore.name)
+            if categoriesFromStore.name != "pinnedCategoryName".localized() {
+                categoriesNamesFromStore.append(categoriesFromStore.name)
+            }
         }
         return categoriesNamesFromStore
     }
@@ -163,7 +171,6 @@ final class TrackerCategoryViewController: UIViewController {
             selectionArray.insert(1.0, at: selectedCategoryRow)
         }
         self.selectionArray = selectionArray
-        
         cornersArray = getCornersArray(categoriesCount: categoriesNames.count)
     }
     
@@ -206,7 +213,7 @@ final class TrackerCategoryViewController: UIViewController {
     /// if user selected category we should dismiss and send categories names and selected category to TrackerCardVC
     private func dismissTrackerCategoryViewController() {
         if let i = selectionArray.firstIndex(of: 1.0) {
-            self.delegate?.sendSelectedCategoryNameToTrackerCard(arrayWithCategoriesNames: categoriesNames, selectedCategoryRow: i)
+            self.delegate?.sendSelectedCategoryNameToTrackerCard(arrayWithCategoriesNames: categoriesNames, selectedCategoryRow: i, selectedName: categoriesNames[i])
         }
     }
     
